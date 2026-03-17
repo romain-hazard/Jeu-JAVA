@@ -14,7 +14,7 @@ function chocMonster3(un_player, un_monster) {
     fill: "#ff0000"
   }).setOrigin(0.5);
 
-  
+
   this.time.delayedCall(1500, () => {
     this.scene.start("accueil", { x: 1376, y: 448 });
   });
@@ -176,13 +176,9 @@ export default class niveau3 extends Phaser.Scene {
 
 
 
-<<<<<<< HEAD
     monster3.setMaxVelocity(150, 150);
     monster3.setDrag(50, 50);
-this.physics.add.overlap(this.player, this.monsters,chocMonster3, null, this);
-=======
-
->>>>>>> df9c0dc17776591f8651ee42e4fdd59581d6e3d3
+    this.physics.add.overlap(this.player, this.monsters, chocMonster3, null, this);
   }
 
 
@@ -214,7 +210,7 @@ this.physics.add.overlap(this.player, this.monsters,chocMonster3, null, this);
     this.monsters.children.iterate((monster) => {
       if (!monster) return;
 
-      
+
       this.physics.moveToObject(monster, this.player, vitesse);
 
       if (monster.body.velocity.x < 0) {
