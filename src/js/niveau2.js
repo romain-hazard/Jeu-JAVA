@@ -6,8 +6,8 @@ export default class niveau2 extends Phaser.Scene {
     });
   }
   preload() {
- this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratoire.png");
- this.load.image("Phaser_tuilesdejeu2", "src/assets/Tiles_scientifique.png");
+ this.load.image("Phaser_tuilesdejeu_1_", "src/assets/laboratoire.png");
+ this.load.image("Phaser_tuilesdejeu_2_", "src/assets/Tiles_scientifique.png");
  this.load.tilemapTiledJSON("carte2", "src/assets/map_niveau_2.json");  
  
   }
@@ -21,12 +21,12 @@ const carteDuNiveau2 = this.add.tilemap("carte2");
 
 const tileset1 = carteDuNiveau2.addTilesetImage(
   "laboratoire",
-  "Phaser_tuilesdejeu1"
+  "Phaser_tuilesdejeu_1_"
 );
 
 const tileset2 = carteDuNiveau2.addTilesetImage(
   "Tiles_scientifique",
-  "Phaser_tuilesdejeu2"
+  "Phaser_tuilesdejeu_2_"
 );
 
 
