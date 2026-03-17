@@ -138,7 +138,7 @@ export default class niveau3 extends Phaser.Scene {
 
     }
 
-    
+
     this.physics.add.collider(this.monsters, calque_s_3);
 
     this.anims.create({
