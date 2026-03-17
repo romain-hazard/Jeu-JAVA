@@ -55,18 +55,6 @@ export default class niveau2 extends Phaser.Scene {
 
   create() {
 
-    this.load.spritesheet("Sprite_monster_1_", "src/assets/Sprite_monster.png", {
-      frameWidth: 65,
-      frameHeight: 77,
-    }
-    );
-
-    this.load.spritesheet("Sprite_monster_2_", "src/assets/Sprite_monster_2.png", {
-      frameWidth: 65,
-      frameHeight: 77,
-    }
-    );
-
 
     const carteDuNiveau2 = this.add.tilemap("carte2");
 
