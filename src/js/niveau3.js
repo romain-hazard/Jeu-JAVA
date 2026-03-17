@@ -10,6 +10,7 @@ export default class niveau3 extends Phaser.Scene {
     this.load.image("Phaser_tuiles_dejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuiles_dejeu2", "src/assets/laboratory_objects_1.png");
     this.load.tilemapTiledJSON("niveau3", "src/assets/map_niveau_3_mov.json");
+    
   }
 
   create() {
@@ -84,6 +85,9 @@ export default class niveau3 extends Phaser.Scene {
     calque_o_3.setDepth(3);
     this.player.setDepth(4);
     calque_3_2_1.setDepth(5);
+
+
+
 
 
   }
