@@ -1,6 +1,6 @@
 import * as fct from "/src/js/fonctions.js";
 
-var monster4;
+
 
 
 export default class niveau3 extends Phaser.Scene {
@@ -99,21 +99,27 @@ export default class niveau3 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 3200, 640);
 
 
-    calque_3.setDepth(0);
-    calque_3_2.setDepth(1);
-    calque_s_3.setDepth(2);
-    calque_o_3.setDepth(3);
-    this.player.setDepth(4);
-    calque_3_2_1.setDepth(5);
 
 
-    monster4 = this.physics.add.sprite(1100, 256, "Sprite_monster");
-    monster4.setBounce(1);
-    monster4.setCollideWorldBounds(true);
-    this.physics.add.collider(monster4, calque_s_3);
-    this.physics.add.collider(monster4, calque_o_3);
+    this.monsters = this.physics.add.group();
 
-    monster4.setDepth(4);
+    for (let i = 0; i < 5; i++) {
+      let monster = this.monsters.create(
+        Phaser.Math.Between(100, 3000),
+        Phaser.Math.Between(100, 500),
+        "Sprite_monster_1_"
+      );
+
+      monster.setBounce(1);
+      monster.setCollideWorldBounds(true);
+      monster.body.allowGravity = false;
+      monster.setMaxVelocity(150, 150);
+      monster.setDrag(50, 50);
+
+    }
+
+    this.physics.add.collider(this.player, this.monsters);
+    this.physics.add.collider(this.monsters, calque_s_3);
 
     this.anims.create({
       key: "anim_tourne_gauche_m",
@@ -142,19 +148,18 @@ export default class niveau3 extends Phaser.Scene {
     });
 
 
-    this.physics.add.collider(this.player, calque_s_3);
-    this.physics.add.collider(this.player, monster4);
-    monster4.body.allowGravity = false;
-    monster4.setMaxVelocity(150, 150);
-    monster4.setDrag(50, 50);
 
-this.physics.add.collider(this.player, monster3);
+    calque_3.setDepth(0);
+    calque_3_2.setDepth(1);
+    calque_s_3.setDepth(2);
+    calque_o_3.setDepth(3);
+    this.player.setDepth(4);
+    this.monsters.setDepth(4);
+    calque_3_2_1.setDepth(5);
 
-    monster3.body.allowGravity = false;
 
 
-    monster3.setMaxVelocity(150, 150);
-    monster3.setDrag(50, 50);
+
 
   }
 
@@ -184,17 +189,21 @@ this.physics.add.collider(this.player, monster3);
     }
 
 
-    if (Phaser.Math.Between(0, 100) < 2) { 
-      monster4.setVelocity(
-      Phaser.Math.Between(-150, 150),
-      Phaser.Math.Between(-150, 150)
-    );
-    }
-    if (monster4.body.velocity.x < 0) {
-      monster4.anims.play("anim_tourne_gauche_m", true);
-    } else if (monster4.body.velocity.x > 0) {
-      monster4.anims.play("anim_tourne_droite_m", true);
-    }
+    this.monsters.children.iterate((monster) => {
+      if (!monster) return;
+
+      // mouvement vers le joueur
+      this.physics.moveToObject(monster, this.player, vitesse);
+
+      // animation
+      if (monster.body.velocity.x < 0) {
+        monster.anims.play("anim_tourne_gauche_m", true);
+      } else if (monster.body.velocity.x > 0) {
+        monster.anims.play("anim_tourne_droite_m", true);
+      } else {
+        monster.anims.play("anim_face_m");
+      }
+    });
 
 
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
