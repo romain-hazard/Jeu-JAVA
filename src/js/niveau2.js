@@ -53,7 +53,7 @@ calque_plateformes.setCollisionByExclusion([-1]);
       fontSize: "22pt"
     });
 
-    this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte2");
+    this.porte_retour = this.physics.add.staticSprite(33, 48, "img_porte2");
 
     this.player = this.physics.add.sprite(100, 300, "img_perso");
     this.player.refreshBody();
