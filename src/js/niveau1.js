@@ -1,13 +1,13 @@
 import * as fct from "/src/js/fonctions.js";
 
-var monster2;
+
 
 
 export default class niveau1 extends Phaser.Scene {
- 
+
   constructor() {
     super({
-      key: "niveau1" 
+      key: "niveau1"
     });
   }
   preload() {
@@ -17,20 +17,20 @@ export default class niveau1 extends Phaser.Scene {
     this.load.image("Phaser_tuilesdejeu_3", "src/assets/Labo.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_niveau_1.json");
 
-    this.load.spritesheet("Sprite_monster_1_","src/assets/Sprite_monster.png",{
+    this.load.spritesheet("Sprite_monster_1_", "src/assets/Sprite_monster.png", {
       frameWidth: 65,
       frameHeight: 77,
     }
     );
 
-    this.load.spritesheet("Sprite_monster_2_","src/assets/Sprite_monster_2.png",{
+    this.load.spritesheet("Sprite_monster_2_", "src/assets/Sprite_monster_2.png", {
       frameWidth: 65,
       frameHeight: 77,
     }
     );
 
 
-   
+
 
 
 
@@ -102,22 +102,37 @@ export default class niveau1 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 3200, 640);
     this.cameras.main.startFollow(this.player);
 
-    monster2=this.physics.add.sprite(200,300,"Sprite_monster");
-    monster2.setBounce(1); 
-    monster2.setCollideWorldBounds(true); 
-    this.physics.add.collider(monster2, calque_plateformes);
+    this.monsters = this.physics.add.group();
+
+for (let i = 0; i < 5; i++) {
+
+  let monster = this.monsters.create(
+    Phaser.Math.Between(100, 3000),
+    Phaser.Math.Between(100, 500),
+    "Sprite_monster_1_"
+  );
+
+  monster.setBounce(1);
+  monster.setCollideWorldBounds(true);
+  monster.body.allowGravity = false;
+  monster.setMaxVelocity(150, 150);
+  monster.setDrag(50, 50);
+}
+
+this.physics.add.collider(this.player, this.monsters);
+this.physics.add.collider(this.monsters, calque_plateformes);
 
     this.anims.create({
-      key: "anim_tourne_gauche_m", 
+      key: "anim_tourne_gauche_m",
       frames: this.anims.generateFrameNumbers("Sprite_monster_2_", {
         start: 23,
         end: 26,
-      }), 
-      frameRate: 10, 
-      repeat: -1 
+      }),
+      frameRate: 10,
+      repeat: -1
     });
 
-    
+
     this.anims.create({
       key: "anim_face_m",
       frames: [{ key: "Sprite_monster", frame: 7 }],
@@ -133,26 +148,18 @@ export default class niveau1 extends Phaser.Scene {
       frameRate: 10,
       repeat: -1
     });
+
+
+
     
-   
-   
-    this.physics.add.collider(player, calque_plateformes);
-    
-    this.physics.add.collider(player, monster2);
-
-    monster2.body.allowGravity = false;
 
 
-    monster2.setMaxVelocity(150, 150);
-    monster2.setDrag(50, 50);
 
 
- 
-    
-   
 
 
-  
+
+
 
   }
 
@@ -171,18 +178,25 @@ export default class niveau1 extends Phaser.Scene {
       this.player.setVelocityY(-330);
     }
 
-    if (Phaser.Math.Between(0, 100) < 2) { 
-      monster2.setVelocity(
-      Phaser.Math.Between(-150, 150),
-      Phaser.Math.Between(-150, 150)
-    );
-    }
-    if (monster2.body.velocity.x < 0) {
-      monster2.anims.play("anim_tourne_gauche_m", true);
-    } else if (monster2.body.velocity.x > 0) {
-      monster2.anims.play("anim_tourne_droite_m", true);
-    }
+    let vitesse = 100;
 
+    
+
+this.monsters.children.iterate((monster) => {
+  if (!monster) return;
+
+  // mouvement vers le joueur
+  this.physics.moveToObject(monster, this.player, vitesse);
+
+  // animation
+  if (monster.body.velocity.x < 0) {
+    monster.anims.play("anim_tourne_gauche_m", true);
+  } else if (monster.body.velocity.x > 0) {
+    monster.anims.play("anim_tourne_droite_m", true);
+  } else {
+    monster.anims.play("anim_face_m");
+  }
+});
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.porte_retour)) {
         this.scene.switch("selection");

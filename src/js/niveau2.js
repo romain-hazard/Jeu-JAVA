@@ -1,3 +1,4 @@
+var monster3;
 export default class niveau2 extends Phaser.Scene {
   // constructeur de la classe
   constructor() {
@@ -6,48 +7,62 @@ export default class niveau2 extends Phaser.Scene {
     });
   }
   preload() {
- this.load.image("Phaser_tuilesdejeu_1_", "src/assets/laboratoire.png");
- this.load.image("Phaser_tuilesdejeu_2_", "src/assets/Tiles_scientifique.png");
- this.load.tilemapTiledJSON("carte2", "src/assets/map_niveau_2.json");  
- 
+    this.load.image("Phaser_tuilesdejeu_1_", "src/assets/laboratoire.png");
+    this.load.image("Phaser_tuilesdejeu_2_", "src/assets/Tiles_scientifique.png");
+    this.load.tilemapTiledJSON("carte2", "src/assets/map_niveau_2.json");
+
   }
 
   create() {
 
+    this.load.spritesheet("Sprite_monster_1_", "src/assets/Sprite_monster.png", {
+      frameWidth: 65,
+      frameHeight: 77,
+    }
+    );
+
+    this.load.spritesheet("Sprite_monster_2_", "src/assets/Sprite_monster_2.png", {
+      frameWidth: 65,
+      frameHeight: 77,
+    }
+    );
 
 
-const carteDuNiveau2 = this.add.tilemap("carte2");
+    const carteDuNiveau2 = this.add.tilemap("carte2");
 
 
-const tileset1 = carteDuNiveau2.addTilesetImage(
-  "laboratoire",
-  "Phaser_tuilesdejeu_1_"
-);
+    const tileset1 = carteDuNiveau2.addTilesetImage(
+      "laboratoire",
+      "Phaser_tuilesdejeu_1_"
+    );
 
-const tileset2 = carteDuNiveau2.addTilesetImage(
-  "Tiles_scientifique",
-  "Phaser_tuilesdejeu_2_"
-);
+    const tileset2 = carteDuNiveau2.addTilesetImage(
+      "Tiles_scientifique",
+      "Phaser_tuilesdejeu_2_"
+    );
 
 
-const calque_background = carteDuNiveau2.createLayer(
-  "calque_background",
-  [tileset1, tileset2]
-);
+    const calque_background = carteDuNiveau2.createLayer(
+      "calque_background",
+      [tileset1, tileset2]
+    );
 
-const calque_background_2 = carteDuNiveau2.createLayer(
-  "calque_background_2",
-  [tileset1, tileset2]
-);
+    const calque_background_2 = carteDuNiveau2.createLayer(
+      "calque_background_2",
+      [tileset1, tileset2]
+    );
 
-const calque_plateformes = carteDuNiveau2.createLayer(
-  "calque_plateformes",
-  [tileset1, tileset2]
-);
-calque_plateformes.setCollisionByExclusion([-1]);
+    const calque_plateformes = carteDuNiveau2.createLayer(
+      "calque_plateformes",
+      [tileset1, tileset2]
+    );
+    calque_plateformes.setCollisionByExclusion([-1]);
 
-    
-   
+    monster3 = this.physics.add.sprite(200, 300, "Sprite_monster");
+    monster3.setBounce(1);
+    monster3.setCollideWorldBounds(true);
+    this.physics.add.collider(monster3, calque_plateformes);
+
     this.add.text(400, 100, "Vous êtes dans le niveau 2", {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
       fontSize: "22pt"
@@ -60,15 +75,41 @@ calque_plateformes.setCollisionByExclusion([-1]);
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.clavier = this.input.keyboard.createCursorKeys();
-    this.physics.add.collider(this.player,calque_plateformes);
+    this.physics.add.collider(this.player, calque_plateformes);
 
 
 
     this.physics.world.setBounds(0, 0, 3200, 640);
     this.cameras.main.setBounds(0, 0, 3200, 640);
-    this.cameras.main.startFollow(this.player); 
+    this.cameras.main.startFollow(this.player);
 
-    
+    this.anims.create({
+      key: "anim_tourne_gauche_m",
+      frames: this.anims.generateFrameNumbers("Sprite_monster_2_", {
+        start: 23,
+        end: 26,
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+
+    this.anims.create({
+      key: "anim_face_m",
+      frames: [{ key: "Sprite_monster", frame: 7 }],
+      frameRate: 20
+    });
+
+    this.anims.create({
+      key: "anim_tourne_droite_m",
+      frames: this.anims.generateFrameNumbers("Sprite_monster", {
+        start: 23,
+        end: 26,
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
+
   }
 
   update() {
@@ -84,6 +125,20 @@ calque_plateformes.setCollisionByExclusion([-1]);
     }
     if (this.clavier.up.isDown && this.player.body.blocked.down) {
       this.player.setVelocityY(-330);
+    }
+
+
+
+    if (Phaser.Math.Between(0, 100) < 2) {
+      monster3.setVelocity(
+        Phaser.Math.Between(-150, 150),
+        Phaser.Math.Between(-150, 150)
+      );
+    }
+    if (monster3.body.velocity.x < 0) {
+      monster3.anims.play("anim_tourne_gauche_m", true);
+    } else if (monster3.body.velocity.x > 0) {
+      monster3.anims.play("anim_tourne_droite_m", true);
     }
 
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {

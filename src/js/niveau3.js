@@ -148,7 +148,13 @@ export default class niveau3 extends Phaser.Scene {
     monster4.setMaxVelocity(150, 150);
     monster4.setDrag(50, 50);
 
+this.physics.add.collider(this.player, monster3);
 
+    monster3.body.allowGravity = false;
+
+
+    monster3.setMaxVelocity(150, 150);
+    monster3.setDrag(50, 50);
 
   }
 
