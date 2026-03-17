@@ -199,6 +199,7 @@ this.monsters.children.iterate((monster) => {
 });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.porte_retour)) {
+        console.log("niveau 1 : retour vers selection");
         this.scene.switch("selection");
       }
     }

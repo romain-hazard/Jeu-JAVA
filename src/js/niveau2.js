@@ -1,4 +1,4 @@
-var monster3;
+
 export default class niveau2 extends Phaser.Scene {
   // constructeur de la classe
   constructor() {
@@ -11,7 +11,24 @@ export default class niveau2 extends Phaser.Scene {
     this.load.image("Phaser_tuilesdejeu_2_", "src/assets/Tiles_scientifique.png");
     this.load.tilemapTiledJSON("carte2", "src/assets/map_niveau_2.json");
 
+    this.load.spritesheet("Sprite_monster_1_", "src/assets/Sprite_monster.png", {
+      frameWidth: 65,
+      frameHeight: 77,
+    }
+    );
+
+    this.load.spritesheet("Sprite_monster_2_", "src/assets/Sprite_monster_2.png", {
+      frameWidth: 65,
+      frameHeight: 77,
+    }
+    );
+
   }
+
+
+
+
+  
 
   create() {
 
@@ -58,10 +75,23 @@ export default class niveau2 extends Phaser.Scene {
     );
     calque_plateformes.setCollisionByExclusion([-1]);
 
-    monster3 = this.physics.add.sprite(200, 300, "Sprite_monster");
-    monster3.setBounce(1);
-    monster3.setCollideWorldBounds(true);
-    this.physics.add.collider(monster3, calque_plateformes);
+   
+    this.monsters = this.physics.add.group();
+
+  for (let i = 0; i < 5; i++) {
+
+  let monster = this.monsters.create(
+    Phaser.Math.Between(100, 3000),
+    Phaser.Math.Between(100, 500),
+    "Sprite_monster_1_"
+  );
+
+  monster.setBounce(1);
+  monster.setCollideWorldBounds(true);
+  monster.body.allowGravity = false;
+  monster.setMaxVelocity(150, 150);
+  monster.setDrag(50, 50);
+}
 
     this.add.text(400, 100, "Vous êtes dans le niveau 2", {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
@@ -127,25 +157,32 @@ export default class niveau2 extends Phaser.Scene {
       this.player.setVelocityY(-330);
     }
 
+    let vitesse = 100;
+
+    
+
+    this.monsters.children.iterate((monster) => {
+      if (!monster) return;
+
+      // mouvement vers le joueur
+      this.physics.moveToObject(monster, this.player, vitesse);
 
 
-    if (Phaser.Math.Between(0, 100) < 2) {
-      monster3.setVelocity(
-        Phaser.Math.Between(-150, 150),
-        Phaser.Math.Between(-150, 150)
-      );
-    }
-    if (monster3.body.velocity.x < 0) {
-      monster3.anims.play("anim_tourne_gauche_m", true);
-    } else if (monster3.body.velocity.x > 0) {
-      monster3.anims.play("anim_tourne_droite_m", true);
-    }
-
+    
+    if (monster.body.velocity.x < 0) {
+      monster.anims.play("anim_tourne_gauche_m", true);
+      } else if (monster.body.velocity.x > 0) {
+        monster.anims.play("anim_tourne_droite_m", true);
+      } else {
+        monster.anims.play("anim_face_m");
+      }
+    });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.porte_retour)) {
-        console.log("niveau 3 : retour vers selection");
+        console.log("niveau 2 : retour vers selection");
         this.scene.switch("selection");
       }
     }
   }
+
 }
