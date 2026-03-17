@@ -1,5 +1,8 @@
 import * as fct from "/src/js/fonctions.js";
 
+var monster2;
+
+
 export default class niveau1 extends Phaser.Scene {
  
   constructor() {
@@ -13,6 +16,19 @@ export default class niveau1 extends Phaser.Scene {
     this.load.image("Phaser_tuilesdejeu2", "src/assets/Tiles_scientifique.png");
     this.load.image("Phaser_tuilesdejeu3", "src/assets/Labo.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_niveau_1.json");
+
+    this.load.spritesheet("Sprite_monster_1_","src/assets/Sprite_monster.png",{
+      frameWidth: 65,
+      frameHeight: 77,
+    }
+    );
+
+    this.load.spritesheet("Sprite_monster_2_","src/assets/Sprite_monster_2.png",{
+      frameWidth: 65,
+      frameHeight: 77,
+    }
+    );
+
 
    
 
@@ -86,6 +102,51 @@ export default class niveau1 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 3200, 640);
     this.cameras.main.startFollow(this.player);
 
+    monster2=this.physics.add.sprite(200,300,"Sprite_monster");
+    monster2.setBounce(1); 
+    monster2.setCollideWorldBounds(true); 
+    this.physics.add.collider(monster2, calque_plateformes);
+
+    this.anims.create({
+      key: "anim_tourne_gauche_m", 
+      frames: this.anims.generateFrameNumbers("Sprite_monster_2_", {
+        start: 23,
+        end: 26,
+      }), 
+      frameRate: 10, 
+      repeat: -1 
+    });
+
+    
+    this.anims.create({
+      key: "anim_face_m",
+      frames: [{ key: "Sprite_monster", frame: 7 }],
+      frameRate: 20
+    });
+
+    this.anims.create({
+      key: "anim_tourne_droite_m",
+      frames: this.anims.generateFrameNumbers("Sprite_monster", {
+        start: 23,
+        end: 26,
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
+    
+   
+   
+    this.physics.add.collider(player, calque_plateformes);
+    
+    this.physics.add.collider(player, monster2);
+
+    monster2.body.allowGravity = false;
+
+
+    monster2.setMaxVelocity(150, 150);
+    monster2.setDrag(50, 50);
+
+
  
     
    
@@ -108,6 +169,18 @@ export default class niveau1 extends Phaser.Scene {
     }
     if (this.clavier.up.isDown && this.player.body.blocked.down) {
       this.player.setVelocityY(-330);
+    }
+
+    if (Phaser.Math.Between(0, 100) < 2) { 
+      monster2.setVelocity(
+      Phaser.Math.Between(-150, 150),
+      Phaser.Math.Between(-150, 150)
+    );
+    }
+    if (monster2.body.velocity.x < 0) {
+      monster2.anims.play("anim_tourne_gauche_m", true);
+    } else if (monster2.body.velocity.x > 0) {
+      monster2.anims.play("anim_tourne_droite_m", true);
     }
 
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
