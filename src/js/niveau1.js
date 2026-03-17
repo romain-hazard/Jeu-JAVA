@@ -54,6 +54,11 @@ export default class niveau1 extends Phaser.Scene {
     this.son_scream = this.sound.add('scream');
     this.son_background = this.sound.add('background');
 
+    this.son_background.play({
+      loop: true,
+      volume: 0.5
+    });
+
     const carteDuNiveau1 = this.add.tilemap("carte1");
 
     fct.doNothing();
@@ -180,7 +185,7 @@ this.physics.add.collider(this.monsters, calque_plateformes);
 
   update() {
 
-   this.son_background.play();
+   
 
     if (this.clavier.left.isDown) {
       this.player.setVelocityX(-160);
@@ -221,6 +226,7 @@ this.monsters.children.iterate((monster) => {
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.porte_retour)) {
         console.log("niveau 1 : retour vers selection");
+        this.son_background.stop();
         this.scene.switch("selection");
       }
     }
@@ -245,6 +251,7 @@ function chocMonster(un_player, un_monster) {
 
   
   this.time.delayedCall(1500, () => {
+    this.son_background.stop();
     this.scene.start("accueil", { x: 288, y: 384 });
   });
 }
