@@ -191,7 +191,7 @@ this.physics.add.overlap(this.player, this.monsters,chocMonster3, null, this);
       this.player.anims.play("anim_tourne_gauche", true);
     }
     else if (this.clavier.right.isDown) {
-      this.player.setVelocityX(vitesse);
+      this.player.setVelocityX(160);
       this.player.anims.play("anim_tourne_droite", true);
     }
     else if (this.clavier.up.isDown) {
