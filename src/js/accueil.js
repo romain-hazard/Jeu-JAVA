@@ -1,4 +1,6 @@
 
+var portal;
+
 export default class accueil extends Phaser.Scene {
   // constructeur de la classe
   constructor() {
@@ -10,8 +12,16 @@ export default class accueil extends Phaser.Scene {
     this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuilesdejeu2", "src/assets/laboratory_objects_1.png");
     this.load.tilemapTiledJSON("accueil", "src/assets/map_accueil.json");  
+    this.load.image("img_portal", "src/assets/portal.png",{
+      frameWidth: 66,
+      frameHeight: 68,
+    });
+    
+     
  
   }
+
+
 
   create() {
    /* this.add.image(400, 300, "img_ciel");
@@ -20,6 +30,17 @@ export default class accueil extends Phaser.Scene {
     this.groupe_plateformes.create(600, 584, "img_plateforme");
     // ajout d'un texte distintcif  du niveau
     */
+
+    this.anims.create({
+      key: "portal_tourne", 
+      frames: this.anims.generateFrameNumbers("img_portal", {
+        start: 0,
+        end: 4,
+      }), 
+      frameRate: 10, 
+      repeat: -1 
+    });
+
 const carteAccueil = this.add.tilemap("accueil");
 
 
@@ -75,6 +96,11 @@ const calque_mur = carteAccueil.createLayer(
 
     this.player = this.physics.add.sprite(200, 350, "img_perso");
     //calque_sol.setCollisionByExclusion([-1]);
+
+    this.portal = this.physics.add.sprite(448,384,"img_portal");
+    this.portal = this.physics.add.sprite(896,352,"img_portal");
+    this.portal = this.physics.add.sprite(1056,352,"img_portal");
+
     calque_mur.setCollisionByExclusion([-1]);
     calque_perimetre.setCollisionByExclusion([-1]);
     calque_deco.setCollisionByExclusion([-1]);
@@ -104,6 +130,8 @@ this.physics.world.gravity.y = 0;
     
 let vitesse = 160;
 this.player.setVelocity(0,0);
+
+
 
 if (this.clavier.left.isDown) {
     this.player.setVelocityX(-vitesse);
