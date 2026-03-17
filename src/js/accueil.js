@@ -97,9 +97,9 @@ const calque_mur = carteAccueil.createLayer(
     this.player = this.physics.add.sprite(32, 200, "img_perso");
     //calque_sol.setCollisionByExclusion([-1]);
 
-    this.portal1 = this.physics.add.sprite(448,384,"img_portal");
-    this.portal2 = this.physics.add.sprite(896,352,"img_portal");
-    this.portal3 = this.physics.add.sprite(1056,352,"img_portal");
+    this.portal1 = this.physics.add.sprite(480,384,"img_portal");
+    this.portal2 = this.physics.add.sprite(928,352,"img_portal");
+    this.portal3 = this.physics.add.sprite(1088,352,"img_portal");
 
     calque_mur.setCollisionByExclusion([-1]);
     calque_perimetre.setCollisionByExclusion([-1]);
