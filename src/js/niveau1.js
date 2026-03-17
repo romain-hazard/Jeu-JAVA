@@ -1,6 +1,22 @@
 import * as fct from "/src/js/fonctions.js";
 
+function chocMonster(un_player, un_monster) {
 
+  this.physics.pause();
+
+  un_player.setTint(0xff0000);
+  un_player.anims.play("anim_face");
+
+  this.add.text(400, 250, "PERDU", {
+    fontSize: "64px",
+    fill: "#ff0000"
+  }).setOrigin(0.5);
+
+  
+  this.time.delayedCall(1500, () => {
+    this.scene.start("accueil", { x: 288, y: 384 });
+  });
+}
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -10,6 +26,8 @@ export default class niveau1 extends Phaser.Scene {
       key: "niveau1"
     });
   }
+
+  
   preload() {
 
     this.load.image("Phaser_tuilesdejeu_1", "src/assets/laboratoire.png");
@@ -119,7 +137,7 @@ for (let i = 0; i < 5; i++) {
   monster.setDrag(50, 50);
 }
 
-this.physics.add.collider(this.player, this.monsters);
+this.physics.add.overlap(this.player, this.monsters,chocMonster, null, this);
 this.physics.add.collider(this.monsters, calque_plateformes);
 
     this.anims.create({
@@ -199,6 +217,7 @@ this.monsters.children.iterate((monster) => {
 });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.porte_retour)) {
+        console.log("niveau 1 : retour vers selection");
         this.scene.switch("selection");
       }
     }
