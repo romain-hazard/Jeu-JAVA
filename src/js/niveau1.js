@@ -51,11 +51,21 @@ export default class niveau1 extends Phaser.Scene {
 
 
 
-
   }
 
   create() {
 
+    this.anims.create({
+      key: "portal_tourne", 
+      frames: this.anims.generateFrameNumbers("img_portal", {
+        start: 0,
+        end: 4,
+      }), 
+      frameRate: 10, 
+      repeat: -1  
+    });
+
+    
 
     const carteDuNiveau1 = this.add.tilemap("carte1");
 
@@ -167,21 +177,25 @@ this.physics.add.collider(this.monsters, calque_plateformes);
       repeat: -1
     });
 
-
-
-    
-
-
-
-
-
-
+this.portal_retour1= this.physics.add.sprite(480,384,"img_portal");
+this.physics.add.collider(this.portal_retour1, calque_plateformes);
+  
 
 
 
   }
 
   update() {
+
+    this.portal_retour1.anims.play("portal_tourne", true);
+
+if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+if (this.physics.overlap(this.player, this.portal_retour1)){
+      this.scene.start("accueil", { x: 588, y: 384 });}
+    }
+
+    
+
     if (this.clavier.left.isDown) {
       this.player.setVelocityX(-160);
       this.player.anims.play("anim_tourne_gauche", true);

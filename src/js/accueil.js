@@ -12,8 +12,10 @@ export default class accueil extends Phaser.Scene {
 
   init(data) {
   this.spawnX = data.x;
-  this.spawnY = data.y;
+  this.spawnY = data.y;  
 }
+
+
   preload() {
     this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuilesdejeu2", "src/assets/laboratory_objects_1.png");
@@ -134,6 +136,7 @@ this.physics.world.gravity.y = 0;
   this.cameras.main.setBounds(0, 0, 3200, 640);
   this.cameras.main.startFollow(this.player); 
 
+  
   
   }
 

@@ -151,9 +151,23 @@ export default class niveau2 extends Phaser.Scene {
       repeat: -1
     });
 this.physics.add.overlap(this.player, this.monsters,chocMonster2, null, this);
+
+this.portal_retour2= this.physics.add.sprite(480,384,"img_portal");
+this.physics.add.collider(this.portal_retour2, calque_plateformes);
+
+
   }
 
+  
   update() {
+
+this.portal_retour2.anims.play("portal_tourne", true);
+if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+if (this.physics.overlap(this.player, this.portal_retour2)){
+      this.scene.start("accueil", { x: 588, y: 384 });}
+    }
+
+
     if (this.clavier.left.isDown) {
       this.player.setVelocityX(-160);
       this.player.anims.play("anim_tourne_gauche", true);
