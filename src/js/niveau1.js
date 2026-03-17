@@ -33,8 +33,9 @@ export default class niveau1 extends Phaser.Scene {
     }
     );
 
-    this.load.audio('blob', 'assets/sound_monstre.mp3');
-    this.load.audio('scream', 'assets/sound_scream.mp3');
+    this.load.audio('blob', 'src/assets/sound_monstre.mp3');
+    this.load.audio('scream', 'src/assets/sound_scream.mp3');
+    this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
 
 
 
@@ -47,9 +48,11 @@ export default class niveau1 extends Phaser.Scene {
 
     var son_blob;
     var son_scream;
+    var son_background;
 
-    son_blob = this.sound.add('blob');
-    son_scream = this.sound.add('scream');
+    this.son_blob = this.sound.add('blob');
+    this.son_scream = this.sound.add('scream');
+    this.son_background = this.sound.add('background');
 
     const carteDuNiveau1 = this.add.tilemap("carte1");
 
@@ -176,6 +179,9 @@ this.physics.add.collider(this.monsters, calque_plateformes);
   }
 
   update() {
+
+   this.son_background.play();
+
     if (this.clavier.left.isDown) {
       this.player.setVelocityX(-160);
       this.player.anims.play("anim_tourne_gauche", true);
@@ -203,10 +209,13 @@ this.monsters.children.iterate((monster) => {
   // animation
   if (monster.body.velocity.x < 0) {
     monster.anims.play("anim_tourne_gauche_m", true);
+    
   } else if (monster.body.velocity.x > 0) {
     monster.anims.play("anim_tourne_droite_m", true);
+    
   } else {
     monster.anims.play("anim_face_m");
+    
   }
 });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
@@ -219,9 +228,11 @@ this.monsters.children.iterate((monster) => {
 }
 
 function chocMonster(un_player, un_monster) {
+  
 
-  son_scream.play();
+  this.son_scream.play();
   this.physics.pause();
+  
   
 
   un_player.setTint(0xff0000);
