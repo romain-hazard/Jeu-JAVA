@@ -1,22 +1,6 @@
 import * as fct from "/src/js/fonctions.js";
 
-function chocMonster(un_player, un_monster) {
 
-  this.physics.pause();
-
-  un_player.setTint(0xff0000);
-  un_player.anims.play("anim_face");
-
-  this.add.text(400, 250, "PERDU", {
-    fontSize: "64px",
-    fill: "#ff0000"
-  }).setOrigin(0.5);
-
-  
-  this.time.delayedCall(1500, () => {
-    this.scene.start("accueil", { x: 288, y: 384 });
-  });
-}
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -46,6 +30,14 @@ export default class niveau1 extends Phaser.Scene {
       frameHeight: 77,
     }
     );
+    this.load.spritesheet("img_portal", "src/assets/portal.png",{
+      frameWidth: 66,
+      frameHeight: 68,
+    });
+    
+    this.load.audio('scream', 'src/assets/sound_scream.mp3');
+    this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
+
 
 
 
@@ -54,6 +46,12 @@ export default class niveau1 extends Phaser.Scene {
   }
 
   create() {
+
+    var son_scream;
+    var son_background;
+
+    this.son_scream = this.sound.add('scream');
+    this.son_background = this.sound.add('background');
 
     this.anims.create({
       key: "portal_tourne", 
@@ -66,6 +64,11 @@ export default class niveau1 extends Phaser.Scene {
     });
 
     
+
+    this.son_background.play({
+      loop: true,
+      volume: 0.5
+    });
 
     const carteDuNiveau1 = this.add.tilemap("carte1");
 
@@ -177,7 +180,7 @@ this.physics.add.collider(this.monsters, calque_plateformes);
       repeat: -1
     });
 
-this.portal_retour1= this.physics.add.sprite(480,384,"img_portal");
+this.portal_retour1= this.physics.add.sprite(64,576,"img_portal");
 this.physics.add.collider(this.portal_retour1, calque_plateformes);
   
 
@@ -232,8 +235,28 @@ this.monsters.children.iterate((monster) => {
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.porte_retour)) {
         console.log("niveau 1 : retour vers selection");
+        this.son_background.stop();
         this.scene.switch("selection");
       }
     }
   }
+}
+function chocMonster(un_player, un_monster) {
+
+  this.son_scream.play();
+  this.physics.pause();
+
+  un_player.setTint(0xff0000);
+  un_player.anims.play("anim_face");
+
+  this.add.text(400, 250, "PERDU", {
+    fontSize: "64px",
+    fill: "#ff0000"
+  }).setOrigin(0.5);
+
+  
+  this.time.delayedCall(1500, () => {
+    this.son_background.stop();
+    this.scene.start("accueil", { x: 288, y: 384 });
+  });
 }
