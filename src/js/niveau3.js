@@ -61,7 +61,7 @@ export default class niveau3 extends Phaser.Scene {
 
     this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte3");
 
-    this.player = this.physics.add.sprite(100, 450, "img_perso");
+    this.player = this.physics.add.sprite(33, 192, "img_perso");
 
     calque_s_3.setCollisionByProperty({estSolide : true});
     calque_o_3.setCollisionByProperty({estSolide : true});
