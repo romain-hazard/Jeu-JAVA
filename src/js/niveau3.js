@@ -9,42 +9,42 @@ export default class niveau3 extends Phaser.Scene {
   preload() {
     this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuilesdejeu2", "src/assets/laboratory_objects_1.png");
-    this.load.tilemapTiledJSON("niveau3", "src/assets/map_niveau_3.json");  
+    this.load.tilemapTiledJSON("niveau3", "src/assets/map_niveau_3.json");
   }
 
   create() {
 
     const carteDuNiveau3 = this.add.tilemap("niveau3");
-    
+
     const tileset1 = carteDuNiveau3.addTilesetImage(
-  "laboratory",
-  "Phaser_tuilesdejeu1"
-);
+      "laboratory",
+      "Phaser_tuilesdejeu1"
+    );
 
-const tileset2 = carteDuNiveau3.addTilesetImage(
-  "laboratory_objects_1",
-  "Phaser_tuilesdejeu2"
-);
+    const tileset2 = carteDuNiveau3.addTilesetImage(
+      "laboratory objects",
+      "Phaser_tuilesdejeu2"
+    );
 
-const calque_3 = carteDuNiveau3.createLayer(
-  "c_background_3",
-  [tileset1, tileset2]
-);
+    const calque_3 = carteDuNiveau3.createLayer(
+      "c_background_3",
+      [tileset1, tileset2]
+    );
 
-const calque_3_2 = carteDuNiveau3.createLayer(
-  "c_background_3_2",
-  [tileset1, tileset2]
-);
+    const calque_3_2 = carteDuNiveau3.createLayer(
+      "c_background_3_2",
+      [tileset1, tileset2]
+    );
 
-const calque_s_3 = carteDuNiveau3.createLayer(
-  "c_background_s_3",
-  [tileset1, tileset2]  
-);
+    const calque_s_3 = carteDuNiveau3.createLayer(
+      "c_background_s_3",
+      [tileset1, tileset2]
+    );
 
-const calque_o_3 = carteDuNiveau3.createLayer(
-  "c_objets_3",
-  [tileset1, tileset2]  
-);
+    const calque_o_3 = carteDuNiveau3.createLayer(
+      "c_objets_3",
+      [tileset1, tileset2]
+    );
 
 
 
@@ -63,33 +63,50 @@ const calque_o_3 = carteDuNiveau3.createLayer(
 
     this.player = this.physics.add.sprite(100, 450, "img_perso");
 
-    calque_s_3.setCollisionByExclusion([-1]);
-    calque_o_3.setCollisionByExclusion([-1]);
+    calque_s_3.setCollisionByProperty({estSolide : true});
+    calque_o_3.setCollisionByProperty({estSolide : true});
     this.physics.add.collider(this.player, calque_s_3);
     this.physics.add.collider(this.player, calque_o_3);
-
     this.player.refreshBody();
     this.player.setBounce(0.2);
     this.player.setCollideWorldBounds(true);
     this.clavier = this.input.keyboard.createCursorKeys();
     this.physics.add.collider(this.player, this.groupe_plateformes);
 
-    this.physics.world.gravity.y=0;
+    this.physics.world.gravity.y = 0;
+
+    this.player.setCollideWorldBounds(true);
+    this.cameras.main.startFollow(this.player);
+    this.physics.world.setBounds(0, 0, 3200, 640);
+    this.cameras.main.setBounds(0, 0, 3200, 640);
+    this.cameras.main.startFollow(this.player);
+
+
   }
 
+
   update() {
+    let vitesse = 160;
+    this.player.setVelocity(0, 0);
+
     if (this.clavier.left.isDown) {
-      this.player.setVelocityX(-160);
+      this.player.setVelocityX(-vitesse);
       this.player.anims.play("anim_tourne_gauche", true);
-    } else if (this.clavier.right.isDown) {
-      this.player.setVelocityX(160);
-      this.player.anims.play("anim_tourne_droite", true);
-    } else {
-      this.player.setVelocityX(0);
-      this.player.anims.play("anim_face");
     }
-    if (this.clavier.up.isDown && this.player.body.touching.down) {
-      this.player.setVelocityY(-330);
+    else if (this.clavier.right.isDown) {
+      this.player.setVelocityX(vitesse);
+      this.player.anims.play("anim_tourne_droite", true);
+    }
+    else if (this.clavier.up.isDown) {
+      this.player.setVelocityY(-vitesse);
+      this.player.anims.play("anim_tourne_droite", true);
+    }
+    else if (this.clavier.down.isDown) {
+      this.player.setVelocityY(vitesse);
+      this.player.anims.play("anim_tourne_gauche", true);
+    }
+    else {
+      this.player.anims.play("anim_face", true);
     }
 
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
