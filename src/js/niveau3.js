@@ -165,11 +165,11 @@ export default class niveau3 extends Phaser.Scene {
 
 
   update() {
-    let vitesse = 160;
+    let vitesse = 80;
     this.player.setVelocity(0, 0);
 
     if (this.clavier.left.isDown) {
-      this.player.setVelocityX(-vitesse);
+      this.player.setVelocityX(-160);
       this.player.anims.play("anim_tourne_gauche", true);
     }
     else if (this.clavier.right.isDown) {
@@ -177,11 +177,11 @@ export default class niveau3 extends Phaser.Scene {
       this.player.anims.play("anim_tourne_droite", true);
     }
     else if (this.clavier.up.isDown) {
-      this.player.setVelocityY(-vitesse);
+      this.player.setVelocityY(-160);
       this.player.anims.play("anim_tourne_droite", true);
     }
     else if (this.clavier.down.isDown) {
-      this.player.setVelocityY(vitesse);
+      this.player.setVelocityY(160);
       this.player.anims.play("anim_tourne_gauche", true);
     }
     else {
@@ -192,10 +192,9 @@ export default class niveau3 extends Phaser.Scene {
     this.monsters.children.iterate((monster) => {
       if (!monster) return;
 
-      // mouvement vers le joueur
+      
       this.physics.moveToObject(monster, this.player, vitesse);
 
-      // animation
       if (monster.body.velocity.x < 0) {
         monster.anims.play("anim_tourne_gauche_m", true);
       } else if (monster.body.velocity.x > 0) {
