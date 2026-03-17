@@ -1,0 +1,44 @@
+{
+    "activeFile": "src/assets/Map1.tmj",
+    "expandedProjectPaths": [
+        "src",
+        "src/assets",
+        "."
+    ],
+    "fileStates": {
+        "": {
+            "scaleInEditor": 1
+        },
+        "src/assets/LaboSol.tsj": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "src/assets/Map1.tmj": {
+            "scale": 0.5,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 716,
+                "y": 323
+            }
+        },
+        "src/assets/Map1.tmj#laboratory floor_ walls_ and borders tileset-4": {
+            "scaleInDock": 1
+        },
+        "src/assets/Map1.tmj#laboratory objects-1": {
+            "scaleInDock": 1
+        }
+    },
+    "last.exportedFilePath": "C:/Users/romai/Desktop/Jeu JAVA",
+    "last.imagePath": "C:/Users/romai/Desktop/Jeu JAVA/src/assets",
+    "map.lastUsedExportFilter": "Fichiers de carte Tiled (*.tmx *.xml)",
+    "map.lastUsedFormat": "json",
+    "openFiles": [
+        "src/assets/Map1.tmj"
+    ],
+    "project": "Niveau.tiled-project",
+    "recentFiles": [
+        "src/assets/Map1.tmj",
+        "src/assets/LaboSol.tsj"
+    ],
+    "tileset.embedInMap": true
+}
