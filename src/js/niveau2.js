@@ -6,6 +6,8 @@ export default class niveau2 extends Phaser.Scene {
       key: "niveau2" //  ici on précise le nom de la classe en tant qu'identifiant
     });
   }
+
+
   preload() {
     this.load.image("Phaser_tuilesdejeu_1_", "src/assets/laboratoire.png");
     this.load.image("Phaser_tuilesdejeu_2_", "src/assets/Tiles_scientifique.png");

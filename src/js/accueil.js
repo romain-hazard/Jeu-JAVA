@@ -8,6 +8,12 @@ export default class accueil extends Phaser.Scene {
       key: "accueil" //  ici on précise le nom de la classe en tant qu'identifiant
     });
   }
+
+
+  init(data) {
+  this.spawnX = data.x;
+  this.spawnY = data.y;
+}
   preload() {
     this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuilesdejeu2", "src/assets/laboratory_objects_1.png");
@@ -95,7 +101,13 @@ const calque_mur = carteAccueil.createLayer(
     this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte3");
 
     this.player = this.physics.add.sprite(32, 200, "img_perso");
-    //calque_sol.setCollisionByExclusion([-1]);
+
+if (this.spawnX !== undefined && this.spawnY !== undefined) {
+  this.player.setPosition(this.spawnX, this.spawnY);
+} else {
+  this.player.setPosition(32, 200); 
+}
+
 
     this.portal1 = this.physics.add.sprite(480,384,"img_portal");
     this.portal2 = this.physics.add.sprite(928,352,"img_portal");
