@@ -12,7 +12,7 @@ export default class accueil extends Phaser.Scene {
     this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuilesdejeu2", "src/assets/laboratory_objects_1.png");
     this.load.tilemapTiledJSON("accueil", "src/assets/map_accueil.json");  
-    this.load.image("img_portal", "src/assets/portal.png",{
+    this.load.spritesheet("img_portal", "src/assets/portal.png",{
       frameWidth: 66,
       frameHeight: 68,
     });
@@ -38,7 +38,7 @@ export default class accueil extends Phaser.Scene {
         end: 4,
       }), 
       frameRate: 10, 
-      repeat: -1 
+      repeat: -1  
     });
 
 const carteAccueil = this.add.tilemap("accueil");
@@ -97,9 +97,9 @@ const calque_mur = carteAccueil.createLayer(
     this.player = this.physics.add.sprite(200, 350, "img_perso");
     //calque_sol.setCollisionByExclusion([-1]);
 
-    this.portal = this.physics.add.sprite(448,384,"img_portal");
-    this.portal = this.physics.add.sprite(896,352,"img_portal");
-    this.portal = this.physics.add.sprite(1056,352,"img_portal");
+    this.portal1 = this.physics.add.sprite(448,384,"img_portal");
+    this.portal2 = this.physics.add.sprite(896,352,"img_portal");
+    this.portal3 = this.physics.add.sprite(1056,352,"img_portal");
 
     calque_mur.setCollisionByExclusion([-1]);
     calque_perimetre.setCollisionByExclusion([-1]);
@@ -124,12 +124,18 @@ this.physics.world.gravity.y = 0;
   this.cameras.main.setBounds(0, 0, 3200, 640);
   this.cameras.main.startFollow(this.player); 
 
+  
+
   }
 
   update() {
     
 let vitesse = 160;
 this.player.setVelocity(0,0);
+
+this.portal1.anims.play("portal_tourne", true);
+this.portal2.anims.play("portal_tourne", true);
+this.portal3.anims.play("portal_tourne", true);
 
 
 

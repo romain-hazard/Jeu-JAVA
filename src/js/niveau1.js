@@ -81,11 +81,14 @@ calque_plateformes.setCollisionByProperty({ estSolide: true });
     this.player.setCollideWorldBounds(true);
     this.clavier = this.input.keyboard.createCursorKeys();
     this.physics.add.collider(this.player, calque_plateformes);
+    
 
 
     this.physics.world.setBounds(0, 0, 3200, 640);
     this.cameras.main.setBounds(0, 0, 3200, 640);
     this.cameras.main.startFollow(this.player); 
+
+  
 
   }
 
