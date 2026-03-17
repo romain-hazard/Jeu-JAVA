@@ -180,7 +180,7 @@ this.physics.add.collider(this.monsters, calque_plateformes);
       repeat: -1
     });
 
-this.portal_retour1= this.physics.add.sprite(64,576,"img_portal");
+this.portal_retour1= this.physics.add.sprite(3072,576,"img_portal");
 this.physics.add.collider(this.portal_retour1, calque_plateformes);
   
 
