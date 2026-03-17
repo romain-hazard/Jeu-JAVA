@@ -225,6 +225,7 @@ function chocMonster2(un_player, un_monster) {
 
   
   this.time.delayedCall(1500, () => {
+    this.son_background.stop();
     this.scene.start("accueil", { x: 896, y: 480 });
   });
 }
