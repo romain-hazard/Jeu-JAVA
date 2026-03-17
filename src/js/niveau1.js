@@ -125,7 +125,7 @@ export default class niveau1 extends Phaser.Scene {
 for (let i = 0; i < 5; i++) {
 
   let monster = this.monsters.create(
-    Phaser.Math.Between(100, 3000),
+    Phaser.Math.Between(800, 3000),
     Phaser.Math.Between(100, 500),
     "Sprite_monster_1_"
   );
@@ -193,10 +193,10 @@ this.physics.add.collider(this.monsters, calque_plateformes);
       this.player.anims.play("anim_face");
     }
     if (this.clavier.up.isDown && this.player.body.blocked.down) {
-      this.player.setVelocityY(-330);
+      this.player.setVelocityY(-430);
     }
 
-    let vitesse = 100;
+    let vitesse = 60;
 
     
 
