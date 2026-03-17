@@ -136,9 +136,9 @@ export default class niveau1 extends Phaser.Scene {
     
    
    
-    this.physics.add.collider(player, calque_plateformes);
+    this.physics.add.collider(this.player, calque_plateformes);
     
-    this.physics.add.collider(player, monster2);
+    this.physics.add.collider(this.player, monster2);
 
     monster2.body.allowGravity = false;
 
