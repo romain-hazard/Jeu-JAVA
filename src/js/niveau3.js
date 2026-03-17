@@ -180,7 +180,6 @@ export default class niveau3 extends Phaser.Scene {
 
 
 
-<<<<<<< HEAD
 this.physics.add.overlap(this.player, this.monsters,chocMonster3, null, this);
 
 this.anims.create({
@@ -200,11 +199,6 @@ this.portal_retour3.body.allowGravity = false;
 this.portal_retour3.setDepth(4); 
 
 
-=======
-   // monster3.setMaxVelocity(150, 150);
-    //monster3.setDrag(50, 50);
-this.physics.add.overlap(this.player, this.monsters,chocMonster3, null, this);
->>>>>>> ed7fab2472c6d043001a1b0ed82587bbd86e77ed
   }
 
 
