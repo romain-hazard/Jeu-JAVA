@@ -7,8 +7,8 @@ export default class niveau3 extends Phaser.Scene {
     });
   }
   preload() {
-    this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratory.png");
-    this.load.image("Phaser_tuilesdejeu2", "src/assets/laboratory_objects_1.png");
+    this.load.image("Phaser_tuiles_dejeu1", "src/assets/laboratory.png");
+    this.load.image("Phaser_tuiles_dejeu2", "src/assets/laboratory_objects_1.png");
     this.load.tilemapTiledJSON("niveau3", "src/assets/map_niveau_3_mov.json");
   }
 
@@ -18,12 +18,12 @@ export default class niveau3 extends Phaser.Scene {
 
     const tileset1 = carteDuNiveau3.addTilesetImage(
       "laboratory",
-      "Phaser_tuilesdejeu1"
+      "Phaser_tuiles_dejeu1"
     );
 
     const tileset2 = carteDuNiveau3.addTilesetImage(
       "laboratory objects",
-      "Phaser_tuilesdejeu2"
+      "Phaser_tuiles_dejeu2"
     );
 
     const calque_3 = carteDuNiveau3.createLayer(
@@ -50,14 +50,6 @@ export default class niveau3 extends Phaser.Scene {
       "c_objets_3",
       [tileset1, tileset2]
     );
-
-
-
-    /*this.add.image(400, 300, "img_ciel");
-    this.groupe_plateformes = this.physics.add.staticGroup();
-    this.groupe_plateformes.create(200, 584, "img_plateforme");
-    this.groupe_plateformes.create(600, 584, "img_plateforme");
-    // ajout d'un texte distintcif  du niveau*/
 
     this.add.text(400, 100, "Vous êtes dans le niveau 3", {
       fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
