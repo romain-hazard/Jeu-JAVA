@@ -176,15 +176,9 @@ export default class niveau3 extends Phaser.Scene {
 
 
 
-<<<<<<< HEAD
-    monster3.setMaxVelocity(150, 150);
-    monster3.setDrag(50, 50);
-    this.physics.add.overlap(this.player, this.monsters, chocMonster3, null, this);
-=======
    // monster3.setMaxVelocity(150, 150);
     //monster3.setDrag(50, 50);
 this.physics.add.overlap(this.player, this.monsters,chocMonster3, null, this);
->>>>>>> a9e94ace5ca208e983bab859466d4f287200dff8
   }
 
 
