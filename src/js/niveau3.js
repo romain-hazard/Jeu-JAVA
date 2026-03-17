@@ -173,7 +173,7 @@ export default class niveau3 extends Phaser.Scene {
       this.player.anims.play("anim_tourne_gauche", true);
     }
     else if (this.clavier.right.isDown) {
-      this.player.setVelocityX(vitesse);
+      this.player.setVelocityX(160);
       this.player.anims.play("anim_tourne_droite", true);
     }
     else if (this.clavier.up.isDown) {
