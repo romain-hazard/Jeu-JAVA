@@ -1,8 +1,22 @@
 import * as fct from "/src/js/fonctions.js";
 
+function chocMonster(un_player, un_monster) {
 
+  this.physics.pause();
 
+  un_player.setTint(0xff0000);
+  un_player.anims.play("anim_face");
 
+  this.add.text(400, 250, "PERDU", {
+    fontSize: "64px",
+    fill: "#ff0000"
+  }).setOrigin(0.5);
+
+  
+  this.time.delayedCall(1500, () => {
+    this.scene.start("accueil", { x: 288, y: 384 });
+  });
+}
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -33,11 +47,6 @@ export default class niveau1 extends Phaser.Scene {
     }
     );
 
-    this.load.audio('blob', 'src/assets/sound_monstre.mp3');
-    this.load.audio('scream', 'src/assets/sound_scream.mp3');
-    this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
-
-
 
 
 
@@ -46,13 +55,17 @@ export default class niveau1 extends Phaser.Scene {
 
   create() {
 
-    var son_blob;
-    var son_scream;
-    var son_background;
+    this.anims.create({
+      key: "portal_tourne", 
+      frames: this.anims.generateFrameNumbers("img_portal", {
+        start: 0,
+        end: 4,
+      }), 
+      frameRate: 10, 
+      repeat: -1  
+    });
 
-    this.son_blob = this.sound.add('blob');
-    this.son_scream = this.sound.add('scream');
-    this.son_background = this.sound.add('background');
+    
 
     this.son_background.play({
       loop: true,
@@ -169,15 +182,9 @@ this.physics.add.collider(this.monsters, calque_plateformes);
       repeat: -1
     });
 
-
-
-    
-
-
-
-
-
-
+this.portal_retour1= this.physics.add.sprite(480,384,"img_portal");
+this.physics.add.collider(this.portal_retour1, calque_plateformes);
+  
 
 
 
@@ -185,7 +192,18 @@ this.physics.add.collider(this.monsters, calque_plateformes);
 
   update() {
 
+<<<<<<< HEAD
    
+=======
+    this.portal_retour1.anims.play("portal_tourne", true);
+
+if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+if (this.physics.overlap(this.player, this.portal_retour1)){
+      this.scene.start("accueil", { x: 588, y: 384 });}
+    }
+
+    
+>>>>>>> e684d8a278597b052980fa6c9761a9a9cf8e27c7
 
     if (this.clavier.left.isDown) {
       this.player.setVelocityX(-160);
@@ -214,13 +232,10 @@ this.monsters.children.iterate((monster) => {
   // animation
   if (monster.body.velocity.x < 0) {
     monster.anims.play("anim_tourne_gauche_m", true);
-    
   } else if (monster.body.velocity.x > 0) {
     monster.anims.play("anim_tourne_droite_m", true);
-    
   } else {
     monster.anims.play("anim_face_m");
-    
   }
 });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
@@ -232,6 +247,7 @@ this.monsters.children.iterate((monster) => {
     }
   }
 }
+<<<<<<< HEAD
 
 function chocMonster(un_player, un_monster) {
   
@@ -255,3 +271,5 @@ function chocMonster(un_player, un_monster) {
     this.scene.start("accueil", { x: 288, y: 384 });
   });
 }
+=======
+>>>>>>> e684d8a278597b052980fa6c9761a9a9cf8e27c7
