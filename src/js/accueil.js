@@ -110,8 +110,8 @@ if (this.spawnX !== undefined && this.spawnY !== undefined) {
 
 
     this.portal1 = this.physics.add.sprite(480,384,"img_portal");
-    this.portal2 = this.physics.add.sprite(928,352,"img_portal");
-    this.portal3 = this.physics.add.sprite(1088,352,"img_portal");
+    this.portal2 = this.physics.add.sprite(992,192,"img_portal");
+    this.portal3 = this.physics.add.sprite(1376,320,"img_portal");
 
     calque_mur.setCollisionByExclusion([-1]);
     calque_perimetre.setCollisionByExclusion([-1]);
