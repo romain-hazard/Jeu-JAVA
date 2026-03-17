@@ -92,7 +92,7 @@ export default class niveau2 extends Phaser.Scene {
   for (let i = 0; i < 5; i++) {
 
   let monster = this.monsters.create(
-    Phaser.Math.Between(100, 3000),
+    Phaser.Math.Between(800, 3000),
     Phaser.Math.Between(100, 500),
     "Sprite_monster_1_"
   );

@@ -1,22 +1,8 @@
 import * as fct from "/src/js/fonctions.js";
 
-function chocMonster(un_player, un_monster) {
 
-  this.physics.pause();
 
-  un_player.setTint(0xff0000);
-  un_player.anims.play("anim_face");
 
-  this.add.text(400, 250, "PERDU", {
-    fontSize: "64px",
-    fill: "#ff0000"
-  }).setOrigin(0.5);
-
-  
-  this.time.delayedCall(1500, () => {
-    this.scene.start("accueil", { x: 288, y: 384 });
-  });
-}
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -47,6 +33,9 @@ export default class niveau1 extends Phaser.Scene {
     }
     );
 
+    this.load.audio('blob', 'assets/sound_monstre.mp3');
+    this.load.audio('scream', 'assets/sound_scream.mp3');
+
 
 
 
@@ -56,6 +45,11 @@ export default class niveau1 extends Phaser.Scene {
 
   create() {
 
+    var son_blob;
+    var son_scream;
+
+    son_blob = this.sound.add('blob');
+    son_scream = this.sound.add('scream');
 
     const carteDuNiveau1 = this.add.tilemap("carte1");
 
@@ -222,4 +216,24 @@ this.monsters.children.iterate((monster) => {
       }
     }
   }
+}
+
+function chocMonster(un_player, un_monster) {
+
+  son_scream.play();
+  this.physics.pause();
+  
+
+  un_player.setTint(0xff0000);
+  un_player.anims.play("anim_face");
+
+  this.add.text(400, 250, "PERDU", {
+    fontSize: "64px",
+    fill: "#ff0000"
+  }).setOrigin(0.5);
+
+  
+  this.time.delayedCall(1500, () => {
+    this.scene.start("accueil", { x: 288, y: 384 });
+  });
 }
