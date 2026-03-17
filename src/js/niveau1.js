@@ -14,6 +14,10 @@ export default class niveau1 extends Phaser.Scene {
     this.load.image("Phaser_tuilesdejeu_3", "src/assets/Labo.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_niveau_1.json");
 
+   
+
+
+
   }
 
   create() {
@@ -82,7 +86,12 @@ export default class niveau1 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 3200, 640);
     this.cameras.main.startFollow(this.player);
 
+ 
+    
+   
 
+
+  
 
   }
 
