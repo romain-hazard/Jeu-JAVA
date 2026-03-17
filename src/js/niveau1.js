@@ -30,6 +30,10 @@ export default class niveau1 extends Phaser.Scene {
       frameHeight: 77,
     }
     );
+    this.load.spritesheet("img_portal", "src/assets/portal.png",{
+      frameWidth: 66,
+      frameHeight: 68,
+    });
     this.load.audio('scream', 'src/assets/sound_scream.mp3');
     this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
 
@@ -189,7 +193,7 @@ this.physics.add.collider(this.portal_retour1, calque_plateformes);
 
 if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
 if (this.physics.overlap(this.player, this.portal_retour1)){
-      this.scene.start("accueil", { x: 588, y: 384 });}
+      this.scene.start("accueil", { x: 128, y: 576 });}
     }
 
     
