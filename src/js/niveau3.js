@@ -9,7 +9,7 @@ export default class niveau3 extends Phaser.Scene {
   preload() {
     this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuilesdejeu2", "src/assets/laboratory_objects_1.png");
-    this.load.tilemapTiledJSON("niveau3", "src/assets/map_niveau_3.json");
+    this.load.tilemapTiledJSON("niveau3", "src/assets/map_niveau_3_mov.json");
   }
 
   create() {
@@ -32,7 +32,12 @@ export default class niveau3 extends Phaser.Scene {
     );
 
     const calque_3_2 = carteDuNiveau3.createLayer(
-      "c_background_3_2",
+      "c_background_3.2",
+      [tileset1, tileset2]
+    );
+
+    const calque_3_2_1 = carteDuNiveau3.createLayer(
+      "c_background_3.2.1",
       [tileset1, tileset2]
     );
 
@@ -63,8 +68,8 @@ export default class niveau3 extends Phaser.Scene {
 
     this.player = this.physics.add.sprite(100, 450, "img_perso");
 
-    calque_s_3.setCollisionByProperty({estSolide : true});
-    calque_o_3.setCollisionByProperty({estSolide : true});
+    calque_s_3.setCollisionByProperty({ estSolide: true });
+    calque_o_3.setCollisionByProperty({ estSolide: true });
     this.physics.add.collider(this.player, calque_s_3);
     this.physics.add.collider(this.player, calque_o_3);
     this.player.refreshBody();
@@ -80,6 +85,13 @@ export default class niveau3 extends Phaser.Scene {
     this.physics.world.setBounds(0, 0, 3200, 640);
     this.cameras.main.setBounds(0, 0, 3200, 640);
     this.cameras.main.startFollow(this.player);
+
+    calque_3.setDepth(0);
+    calque_3_2.setDepth(1);
+    calque_s_3.setDepth(2);
+    calque_o_3.setDepth(3);
+    this.player.setDepth(4);
+    calque_3_2_1.setDepth(5);
 
 
   }
@@ -115,5 +127,9 @@ export default class niveau3 extends Phaser.Scene {
         this.scene.switch("selection");
       }
     }
+
+
+
+
   }
 }
