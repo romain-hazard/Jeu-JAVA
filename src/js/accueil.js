@@ -94,7 +94,7 @@ const calque_mur = carteAccueil.createLayer(
 
     this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte3");
 
-    this.player = this.physics.add.sprite(200, 350, "img_perso");
+    this.player = this.physics.add.sprite(32, 200, "img_perso");
     //calque_sol.setCollisionByExclusion([-1]);
 
     this.portal1 = this.physics.add.sprite(448,384,"img_portal");
@@ -116,8 +116,6 @@ const calque_mur = carteAccueil.createLayer(
 
 this.physics.world.gravity.y = 0;
 
-
-
   this.player.setCollideWorldBounds(true);
   this.cameras.main.startFollow(this.player);
   this.physics.world.setBounds(0, 0, 3200, 640);
@@ -125,7 +123,6 @@ this.physics.world.gravity.y = 0;
   this.cameras.main.startFollow(this.player); 
 
   
-
   }
 
   update() {
