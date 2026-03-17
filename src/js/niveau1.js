@@ -1,8 +1,22 @@
 import * as fct from "/src/js/fonctions.js";
 
-var groupe_potions;
+function chocMonster(un_player, un_monster) {
 
+  this.physics.pause();
 
+  un_player.setTint(0xff0000);
+  un_player.anims.play("anim_face");
+
+  this.add.text(400, 250, "PERDU", {
+    fontSize: "64px",
+    fill: "#ff0000"
+  }).setOrigin(0.5);
+
+  
+  this.time.delayedCall(1500, () => {
+    this.scene.start("accueil", { x: 288, y: 384 });
+  });
+}
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -33,10 +47,6 @@ export default class niveau1 extends Phaser.Scene {
     }
     );
 
-    this.load.audio('blob', 'assets/sound_monstre.mp3');
-    this.load.audio('scream', 'assets/sound_scream.mp3');
-
-
 
 
 
@@ -45,11 +55,17 @@ export default class niveau1 extends Phaser.Scene {
 
   create() {
 
-    var son_blob;
-    var son_scream;
+    this.anims.create({
+      key: "portal_tourne", 
+      frames: this.anims.generateFrameNumbers("img_portal", {
+        start: 0,
+        end: 4,
+      }), 
+      frameRate: 10, 
+      repeat: -1  
+    });
 
-    son_blob = this.sound.add('blob');
-    son_scream = this.sound.add('scream');
+    
 
     const carteDuNiveau1 = this.add.tilemap("carte1");
 
@@ -161,21 +177,25 @@ this.physics.add.collider(this.monsters, calque_plateformes);
       repeat: -1
     });
 
-
-
-    
-
-
-
-
-
-
+this.portal_retour1= this.physics.add.sprite(480,384,"img_portal");
+this.physics.add.collider(this.portal_retour1, calque_plateformes);
+  
 
 
 
   }
 
   update() {
+
+    this.portal_retour1.anims.play("portal_tourne", true);
+
+if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+if (this.physics.overlap(this.player, this.portal_retour1)){
+      this.scene.start("accueil", { x: 588, y: 384 });}
+    }
+
+    
+
     if (this.clavier.left.isDown) {
       this.player.setVelocityX(-160);
       this.player.anims.play("anim_tourne_gauche", true);
@@ -216,24 +236,4 @@ this.monsters.children.iterate((monster) => {
       }
     }
   }
-}
-
-function chocMonster(un_player, un_monster) {
-
-  son_scream.play();
-  this.physics.pause();
-  
-
-  un_player.setTint(0xff0000);
-  un_player.anims.play("anim_face");
-
-  this.add.text(400, 250, "PERDU", {
-    fontSize: "64px",
-    fill: "#ff0000"
-  }).setOrigin(0.5);
-
-  
-  this.time.delayedCall(1500, () => {
-    this.scene.start("accueil", { x: 288, y: 384 });
-  });
 }

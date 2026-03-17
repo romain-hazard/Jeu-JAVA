@@ -27,6 +27,10 @@ export default class niveau3 extends Phaser.Scene {
     });
   }
   preload() {
+    this.load.spritesheet("img_portal", "src/assets/portal.png",{
+      frameWidth: 66,
+      frameHeight: 68,
+    });
     this.load.image("Phaser_tuiles_dejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuiles_dejeu2", "src/assets/laboratory_objects_1.png");
     this.load.tilemapTiledJSON("niveau3", "src/assets/map_niveau_3_mov.json");
@@ -176,13 +180,37 @@ export default class niveau3 extends Phaser.Scene {
 
 
 
-    // monster3.setMaxVelocity(150, 150);
-    //monster3.setDrag(50, 50);
-    this.physics.add.overlap(this.player, this.monsters, chocMonster3, null, this);
+this.physics.add.overlap(this.player, this.monsters,chocMonster3, null, this);
+
+this.anims.create({
+      key: "portal_tourne", 
+      frames: this.anims.generateFrameNumbers("img_portal", {
+        start: 0,
+        end: 4,
+      }), 
+      frameRate: 10, 
+      repeat: -1  
+    });
+
+
+
+this.portal_retour3= this.physics.add.sprite(480,484,"img_portal");
+this.portal_retour3.body.allowGravity = false;
+this.portal_retour3.setDepth(4); 
+
+
   }
 
 
   update() {
+
+
+     this.portal_retour3.anims.play("portal_tourne", true);
+    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+if (this.physics.overlap(this.player, this.portal_retour3)){
+      this.scene.start("accueil", { x: 588, y: 384 });}
+    }
+
     let vitesse = 80;
     this.player.setVelocity(0, 0);
 
