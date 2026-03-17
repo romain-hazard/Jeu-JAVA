@@ -30,6 +30,7 @@ export default class niveau2 extends Phaser.Scene {
       frameHeight: 68,
     });
     this.load.audio('scream', 'src/assets/sound_scream.mp3');
+    this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
 
   }
 
@@ -41,8 +42,16 @@ export default class niveau2 extends Phaser.Scene {
   create() {
 
     var son_scream;
+    var son_background;
+
 
     this.son_scream = this.sound.add('scream');
+    this.son_background = this.sound.add('background');
+
+    this.son_background.play({
+      loop: true,
+      volume: 0.5
+    });
 
 
     const carteDuNiveau2 = this.add.tilemap("carte2");

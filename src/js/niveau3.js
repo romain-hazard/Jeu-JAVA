@@ -46,6 +46,10 @@ export default class niveau3 extends Phaser.Scene {
       frameHeight: 77,
     }
     );
+    this.load.audio('scream', 'src/assets/sound_scream.mp3');
+    this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
+
+
 
 
   }
