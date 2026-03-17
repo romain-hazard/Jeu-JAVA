@@ -12,9 +12,9 @@ export default class niveau1 extends Phaser.Scene {
   }
   preload() {
 
-    this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratoire.png");
-    this.load.image("Phaser_tuilesdejeu2", "src/assets/Tiles_scientifique.png");
-    this.load.image("Phaser_tuilesdejeu3", "src/assets/Labo.png");
+    this.load.image("Phaser_tuilesdejeu_1", "src/assets/laboratoire.png");
+    this.load.image("Phaser_tuilesdejeu_2", "src/assets/Tiles_scientifique.png");
+    this.load.image("Phaser_tuilesdejeu_3", "src/assets/Labo.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_niveau_1.json");
 
     this.load.spritesheet("Sprite_monster_1_","src/assets/Sprite_monster.png",{
@@ -46,17 +46,17 @@ export default class niveau1 extends Phaser.Scene {
 
     const tileset1 = carteDuNiveau1.addTilesetImage(
       "laboratoire",
-      "Phaser_tuilesdejeu1"
+      "Phaser_tuilesdejeu_1"
     );
 
     const tileset2 = carteDuNiveau1.addTilesetImage(
       "Tiles_scientifique",
-      "Phaser_tuilesdejeu2"
+      "Phaser_tuilesdejeu_2"
     );
 
     const tileset3 = carteDuNiveau1.addTilesetImage(
       "Labo",
-      "Phaser_tuilesdejeu3"
+      "Phaser_tuilesdejeu_3"
     );
 
 
