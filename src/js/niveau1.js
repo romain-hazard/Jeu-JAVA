@@ -1,6 +1,6 @@
 import * as fct from "/src/js/fonctions.js";
 
-
+var groupe_potions;
 
 
 

@@ -134,7 +134,7 @@ export default class niveau3 extends Phaser.Scene {
 
     }
 
-    
+
     this.physics.add.collider(this.monsters, calque_s_3);
 
     this.anims.create({
@@ -176,9 +176,9 @@ export default class niveau3 extends Phaser.Scene {
 
 
 
-   // monster3.setMaxVelocity(150, 150);
+    // monster3.setMaxVelocity(150, 150);
     //monster3.setDrag(50, 50);
-this.physics.add.overlap(this.player, this.monsters,chocMonster3, null, this);
+    this.physics.add.overlap(this.player, this.monsters, chocMonster3, null, this);
   }
 
 
