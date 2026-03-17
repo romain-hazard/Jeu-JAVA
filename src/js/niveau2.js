@@ -25,6 +25,10 @@ export default class niveau2 extends Phaser.Scene {
       frameHeight: 77,
     }
     );
+     this.load.spritesheet("img_portal", "src/assets/portal.png",{
+      frameWidth: 66,
+      frameHeight: 68,
+    });
     this.load.audio('scream', 'src/assets/sound_scream.mp3');
 
   }
