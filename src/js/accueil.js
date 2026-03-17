@@ -134,6 +134,15 @@ this.portal1.anims.play("portal_tourne", true);
 this.portal2.anims.play("portal_tourne", true);
 this.portal3.anims.play("portal_tourne", true);
 
+if (this.physics.overlap(this.player, this.portal1)){
+      this.scene.switch("niveau1");}
+
+if (this.physics.overlap(this.player, this.portal2)){
+      this.scene.switch("niveau2");}
+
+if (this.physics.overlap(this.player, this.portal3)){
+      this.scene.switch("niveau3");}
+
 
 
 if (this.clavier.left.isDown) {
