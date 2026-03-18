@@ -185,7 +185,7 @@ export default class niveau2 extends Phaser.Scene {
 
 
 
-    this.portal_retour2 = this.physics.add.sprite(2752, 448, "img_portal");
+    this.portal_retour2 = this.physics.add.sprite(2816, 448, "img_portal");
     this.physics.add.collider(this.portal_retour2, calque_plateformes);
 
 
