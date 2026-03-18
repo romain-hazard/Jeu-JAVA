@@ -76,7 +76,7 @@ hitMonster(bullet, monster) {
 
     this.son_background.play({
       loop: true,
-      volume: 0.5
+      volume: 3
     });
 
 
