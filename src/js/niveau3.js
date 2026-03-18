@@ -266,7 +266,7 @@ export default class niveau3 extends Phaser.Scene {
 
     // Collisions avec joueur et monstres
     this.physics.add.collider(this.player, calque_3);
-    this.physics.add.collider(this.monsters, calque_3);
+   // this.physics.add.collider(this.monsters, calque_3);
     this.physics.add.collider(this.groupeBullets, calque_3, (bullet) => {
       bullet.destroy();
     });
@@ -333,6 +333,9 @@ export default class niveau3 extends Phaser.Scene {
       } else {
         monster.anims.play("anim_face_m");
       }
+    
+    
+    
     });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.portal_retour3) &&
