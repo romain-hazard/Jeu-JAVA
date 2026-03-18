@@ -26,6 +26,7 @@ export default class accueil extends Phaser.Scene {
     });
     
      this.load.font
+     this.load.audio('labo', 'src/assets/acceuil_labo.mp3');
  
   }
 
@@ -39,11 +40,18 @@ export default class accueil extends Phaser.Scene {
     // ajout d'un texte distintcif  du niveau
     */
 
+    var son_labo;
+    this.son_labo = this.sound.add('labo');
+    this.son_labo.play({
+      loop: true,
+      volume: 4
+    });
+
     this.anims.create({
       key: "portal_tourne", 
       frames: this.anims.generateFrameNumbers("img_portal", {
         start: 0,
-        end: 4,
+        end: 2.5,
       }), 
       frameRate: 10, 
       repeat: -1  
@@ -152,12 +160,15 @@ this.portal3.anims.play("portal_tourne", true);
 
 if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
 if (this.physics.overlap(this.player, this.portal1)){
+      this.son_labo.stop();
       this.scene.start("niveau1");}
 
 if (this.physics.overlap(this.player, this.portal2)){
+      this.son_labo.stop();
       this.scene.switch("niveau2");}
 
 if (this.physics.overlap(this.player, this.portal3)){
+      this.son_labo.stop();
       this.scene.switch("niveau3");}
 }
 
