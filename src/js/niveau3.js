@@ -165,7 +165,7 @@ hitMonster(bullet, monster) {
 
     this.monsters = this.physics.add.group();
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 8; i++) {
       let monster = this.monsters.create(
         Phaser.Math.Between(100, 3000),
         Phaser.Math.Between(100, 500),

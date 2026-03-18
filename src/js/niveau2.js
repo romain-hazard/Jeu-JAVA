@@ -90,7 +90,7 @@ export default class niveau2 extends Phaser.Scene {
    
     this.monsters = this.physics.add.group();
 
-  for (let i = 0; i < 5; i++) {
+  for (let i = 0; i < 3; i++) {
 
   let monster = this.monsters.create(
     Phaser.Math.Between(800, 3000),
