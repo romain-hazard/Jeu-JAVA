@@ -207,18 +207,11 @@ export default class niveau1 extends Phaser.Scene {
 
     this.portal_retour1.anims.play("portal_tourne", true);
 
-<<<<<<< HEAD
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.portal_retour1)) {
-        this.scene.start("accueil", { x: 588, y: 384 });
-      }
-=======
 if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
 if (this.physics.overlap(this.player, this.portal_retour1)){
       this.son_reussite.play();
       this.son_background.stop();
       this.scene.start("accueil", { x: 588, y: 384 });}
->>>>>>> 63086292ca17327d9de08e8ea80663446c5f6aeb
     }
 
 
