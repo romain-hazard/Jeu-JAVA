@@ -11,7 +11,7 @@ export default class niveau3 extends Phaser.Scene {
     });
   }
   preload() {
-    this.load.spritesheet("img_portal", "src/assets/portal.png",{
+    this.load.spritesheet("img_portal", "src/assets/portal.png", {
       frameWidth: 66,
       frameHeight: 68,
     });
@@ -32,47 +32,52 @@ export default class niveau3 extends Phaser.Scene {
     );
     this.load.audio('scream', 'src/assets/sound_scream.mp3');
     this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
+    this.load.audio('win', 'src/assets/sound_win_fin.mp3');
 
 
     this.load.image("bullet", "src/assets/Slime.png")
+    this.load.image("fond_final", "src/assets/fond_fin.png");
 
   }
 
-tirer() {
-  let coefDir = (this.player.direction === 'left') ? -1 : 1;
+  tirer() {
+    let coefDir = (this.player.direction === 'left') ? -1 : 1;
 
-  let bullet = this.groupeBullets.create(
-    this.player.x + (25 * coefDir),
-    this.player.y,
-    'bullet'
-  );
+    let bullet = this.groupeBullets.create(
+      this.player.x + (25 * coefDir),
+      this.player.y,
+      'bullet'
+    );
 
-  bullet.setVelocity(600 * coefDir, 0);
-  bullet.body.allowGravity = false;
-  bullet.setCollideWorldBounds(true);
-  bullet.body.onWorldBounds = true;
-  bullet.setScale(0.3);
-  bullet.setDepth(5);
-}
-
-hitMonster(bullet, monster) {
-  monster.pointsVie--;
-
-  if (monster.pointsVie <= 0) {
-    monster.destroy();
+    bullet.setVelocity(600 * coefDir, 0);
+    bullet.body.allowGravity = false;
+    bullet.setCollideWorldBounds(true);
+    bullet.body.onWorldBounds = true;
+    bullet.setScale(0.3);
+    bullet.setDepth(5);
   }
 
-  bullet.destroy();
-}
+  hitMonster(bullet, monster) {
+    monster.pointsVie--;
+
+    if (monster.pointsVie <= 0) {
+      monster.destroy();
+    }
+
+    bullet.destroy();
+  }
 
 
   create() {
 
     var son_scream;
     var son_background;
+    var son_win;
 
     this.son_scream = this.sound.add('scream');
     this.son_background = this.sound.add('background');
+    this.son_win = this.sound.add('win');
+
 
     this.son_background.play({
       loop: true,
@@ -118,19 +123,19 @@ hitMonster(bullet, monster) {
     );
 
     WebFont.load({
-    custom: {
-      families: ['plasdrip']
-    },
-    active: () => {
-      this.add.text(400, 100, "Vous êtes dans le niveau 3", {
-        fontFamily: 'plasdrip',
-        fontSize: "22pt",
-        color: '#37d83c'
-      });
-    }
-  });
+      custom: {
+        families: ['plasdrip']
+      },
+      active: () => {
+        this.add.text(400, 100, "Vous êtes dans le niveau 3", {
+          fontFamily: 'plasdrip',
+          fontSize: "22pt",
+          color: '#37d83c'
+        });
+      }
+    });
 
-    
+
 
     this.player = this.physics.add.sprite(33, 192, "img_perso");
     this.player.direction = 'right';
@@ -144,7 +149,7 @@ hitMonster(bullet, monster) {
     calque_o_3.setCollisionByProperty({ estSolide: true });
 
 
-    
+
 
     this.physics.add.collider(this.player, calque_s_3);
     this.physics.add.collider(this.player, calque_o_3);
@@ -186,15 +191,15 @@ hitMonster(bullet, monster) {
     this.physics.add.overlap(this.groupeBullets, this.monsters, this.hitMonster, null, this);
     this.physics.add.collider(this.monsters, calque_s_3);
     this.physics.add.collider(this.groupeBullets, calque_s_3, (bullet) => {
-  bullet.destroy();
-});
+      bullet.destroy();
+    });
 
-this.physics.world.on("worldbounds", (body) => {
-  let obj = body.gameObject;
-  if (this.groupeBullets.contains(obj)) {
-    obj.destroy();
-  }
-});
+    this.physics.world.on("worldbounds", (body) => {
+      let obj = body.gameObject;
+      if (this.groupeBullets.contains(obj)) {
+        obj.destroy();
+      }
+    });
 
 
 
@@ -237,34 +242,34 @@ this.physics.world.on("worldbounds", (body) => {
 
 
 
-this.physics.add.overlap(this.player, this.monsters,chocMonster3, null, this);
+    this.physics.add.overlap(this.player, this.monsters, chocMonster3, null, this);
 
-this.anims.create({
-      key: "portal_tourne", 
+    this.anims.create({
+      key: "portal_tourne",
       frames: this.anims.generateFrameNumbers("img_portal", {
         start: 0,
         end: 4,
-      }), 
-      frameRate: 10, 
-      repeat: -1  
+      }),
+      frameRate: 10,
+      repeat: -1
     });
 
 
 
-this.portal_retour3= this.physics.add.sprite(2784,448,"img_portal");
-this.portal_retour3.body.allowGravity = false;
-this.portal_retour3.setDepth(4); 
+    this.portal_retour3 = this.physics.add.sprite(2784, 448, "img_portal");
+    this.portal_retour3.body.allowGravity = false;
+    this.portal_retour3.setDepth(4);
 
 
 
-calque_3.setCollisionByProperty({ estSolide: true });
+    calque_3.setCollisionByProperty({ estSolide: true });
 
-// Collisions avec joueur et monstres
-this.physics.add.collider(this.player, calque_3);
-this.physics.add.collider(this.monsters, calque_3);
-this.physics.add.collider(this.groupeBullets, calque_3, (bullet) => {
-  bullet.destroy();
-});
+    // Collisions avec joueur et monstres
+    this.physics.add.collider(this.player, calque_3);
+    this.physics.add.collider(this.monsters, calque_3);
+    this.physics.add.collider(this.groupeBullets, calque_3, (bullet) => {
+      bullet.destroy();
+    });
 
   }
 
@@ -273,21 +278,22 @@ this.physics.add.collider(this.groupeBullets, calque_3, (bullet) => {
 
 
     if (Phaser.Input.Keyboard.JustDown(this.boutonFeu)) {
-  this.tirer();
-}
+      this.tirer();
+    }
 
 
-if (this.clavier.left.isDown) {
-  this.player.direction = 'left';
-}
-else if (this.clavier.right.isDown) {
-  this.player.direction = 'right';
-}
+    if (this.clavier.left.isDown) {
+      this.player.direction = 'left';
+    }
+    else if (this.clavier.right.isDown) {
+      this.player.direction = 'right';
+    }
 
-     this.portal_retour3.anims.play("portal_tourne", true);
+    this.portal_retour3.anims.play("portal_tourne", true);
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-if (this.physics.overlap(this.player, this.portal_retour3)){
-      this.scene.start("accueil", { x: 588, y: 384 });}
+      if (this.physics.overlap(this.player, this.portal_retour3)) {
+        this.scene.start("accueil", { x: 588, y: 384 });
+      }
     }
 
     let vitesse = 80;
@@ -328,6 +334,22 @@ if (this.physics.overlap(this.player, this.portal_retour3)){
         monster.anims.play("anim_face_m");
       }
     });
+    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+      if (this.physics.overlap(this.player, this.portal_retour3) &&
+        this.monster.countActive(true) === 0
+      ) {
+        this.son_win.play();
+        this.son_background.stop();
+        this.time.delayedCall(3000, () => {
+          this.scene.start("accueil", { x: 1088 ,y: 256 });
+        });
+      } else {
+        this.add.text(this.player.x, this.player.y - 20, "MONSTRE !!!", {
+          fontSize: "16px",
+          fill: "#ff0000"
+        });
+      }
+    }
 
 
 
