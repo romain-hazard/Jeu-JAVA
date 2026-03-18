@@ -198,6 +198,7 @@ if (this.physics.overlap(this.player, this.portal_retour2)){
     if (this.clavier.up.isDown && this.player.body.blocked.down) {
       this.player.setVelocityY(-330);
     }
+    
 
     let vitesse = 0;
 
