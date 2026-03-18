@@ -18,7 +18,7 @@ export default class niveau1 extends Phaser.Scene {
     this.load.image("Phaser_tuilesdejeu_2", "src/assets/Tiles_scientifique.png");
     this.load.image("Phaser_tuilesdejeu_3", "src/assets/Labo.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_niveau_1.json");
-    this.load.image("potion", "src/assets/potion.png");
+  
 
     this.load.spritesheet("Sprite_monster_1_", "src/assets/Sprite_monster.png", {
       frameWidth: 65,
@@ -31,9 +31,15 @@ export default class niveau1 extends Phaser.Scene {
       frameHeight: 77,
     }
     );
+
     this.load.spritesheet("img_portal", "src/assets/portal.png", {
       frameWidth: 66,
       frameHeight: 68,
+    });
+
+    this.load.spritesheet("potion", "src/assets/potion.png", {
+      frameWidth: 18,
+      frameHeight: 24,
     });
 
     this.load.audio('scream', 'src/assets/sound_scream.mp3');
@@ -73,7 +79,7 @@ export default class niveau1 extends Phaser.Scene {
       loop: true,
       volume: 3,
     });
-    
+
 
     const carteDuNiveau1 = this.add.tilemap("carte1");
 
@@ -199,8 +205,16 @@ export default class niveau1 extends Phaser.Scene {
     groupe_potions.create(1024, 96, "potion");
     groupe_potions.create(768, 480, "potion");
     this.physics.add.collider(groupe_potions, calque_plateformes);
+    this.physics.add.overlap(this.player, groupe_potions, ramasserPotion, null, this);
 
+    this.anims.create({
+      key: "Potion",
+      frames: [{ key: "potion", frame: 0 }],
+      frameRate: 4
+    });
+    groupe_potions.anims.play('Potion');
 
+    this.physics.add.overlap(this.player, groupe_potions, ramasserPotion, null, this);
 
     this.portal_retour1 = this.physics.add.sprite(3072, 576, "img_portal");
     this.physics.add.collider(this.portal_retour1, calque_plateformes);
@@ -215,11 +229,21 @@ export default class niveau1 extends Phaser.Scene {
 
     this.portal_retour1.anims.play("portal_tourne", true);
 
+<<<<<<< HEAD
+    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+      if (this.physics.overlap(this.player, this.portal_retour1)) {
+        this.son_background.stop();
+        this.son_reussite.play();
+        this.scene.start("accueil", { x: 588, y: 384 });
+        this.son_reussite.stop();
+      }
+=======
 if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
 if (this.physics.overlap(this.player, this.portal_retour1)){
       this.son_reussite.play();
       this.son_background.stop();
       this.scene.start("accueil", { x: 588, y: 384 });}
+>>>>>>> fd71c14d633f24efe64c19e992310c2331e7aa23
     }
 
 
@@ -238,7 +262,7 @@ if (this.physics.overlap(this.player, this.portal_retour1)){
       this.player.setVelocityY(-430);
     }
 
-    let vitesse = 60;
+    let vitesse = 0;
 
 
 
@@ -264,8 +288,16 @@ if (this.physics.overlap(this.player, this.portal_retour1)){
         this.scene.switch("selection");
       }
     }
+
+
+
+
+
+
   }
 }
+
+
 function chocMonster(un_player, un_monster) {
 
   this.son_scream.play();
@@ -285,3 +317,18 @@ function chocMonster(un_player, un_monster) {
     this.scene.start("accueil", { x: 288, y: 384 });
   });
 }
+
+
+
+function ramasserPotion(un_player, une_potion) {
+ une_potion.disableBody(true, true);
+}
+
+
+
+
+
+
+
+
+

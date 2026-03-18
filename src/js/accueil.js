@@ -44,7 +44,7 @@ export default class accueil extends Phaser.Scene {
     this.son_labo = this.sound.add('labo');
     this.son_labo.play({
       loop: true,
-      volume: 4
+      volume: 0.2
     });
 
     this.anims.create({
