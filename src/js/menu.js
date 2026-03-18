@@ -8,61 +8,52 @@ export default class menu extends Phaser.Scene {
   preload() {
     this.load.image("menu_fond", "src/assets/menu_fond.png");
     this.load.image("imageBoutonPlay", "src/assets/start.png");
-    this.load.image("Bouton_consignes", "src/assets/bouton_info.png");
     this.load.image("consigne_fond", "src/assets/menu_consigne.png");
   }
 
   create() {
+    this.showMenu();
+  }
+
+  // 🔹 Écran menu
+  showMenu() {
     const width = this.sys.game.config.width;
     const height = this.sys.game.config.height;
 
-    // Fond menu
+    this.children.removeAll();
+
     let bg = this.add.image(0, 0, "menu_fond").setOrigin(0);
     bg.displayWidth = width;
     bg.displayHeight = height;
 
-    // Boutons réduits et espacés
-    const boutonScale = 0.5;
-
-    let bouton_play = this.add.image(width/2, height/2 - 50, "imageBoutonPlay")
-      .setScale(boutonScale)
+    let bouton_play = this.add.image(width/2, height/2, "imageBoutonPlay")
+      .setScale(0.5)
       .setInteractive({ useHandCursor: true });
 
-    let bouton_consigne = this.add.image(width/2, height/2 + 50, "Bouton_consignes")
-      .setScale(boutonScale)
-      .setInteractive({ useHandCursor: true });
-
-    // Cliquer sur Play → accueil
     bouton_play.on("pointerup", () => {
-      this.scene.switch("accueil");
-    });
-
-    // Cliquer sur Info → afficher les consignes
-    bouton_consigne.on("pointerup", () => {
       this.showConsignes();
     });
   }
 
-  showConsignes() {
-    const width = this.sys.game.config.width;
-    const height = this.sys.game.config.height;
+  // 🔹 Écran consignes
+  // Écran consignes
+showConsignes() {
+  const width = this.sys.game.config.width;
+  const height = this.sys.game.config.height;
 
-    // Masquer les boutons du menu en les détruisant
-    this.children.removeAll();
+  this.children.removeAll();
 
-    // Fond consignes
-    let bg_consigne = this.add.image(0, 0, "consigne_fond").setOrigin(0);
-    bg_consigne.displayWidth = width;
-    bg_consigne.displayHeight = height;
+  let bg = this.add.image(0, 0, "consigne_fond").setOrigin(0);
+  bg.displayWidth = width;
+  bg.displayHeight = height;
 
-    // Bouton Start pour revenir à l'accueil
-    const boutonScale = 0.5;
-    let bouton_start = this.add.image(width/2, height - 100, "imageBoutonPlay")
-      .setScale(boutonScale)
-      .setInteractive({ useHandCursor: true });
+  // Déplacer le bouton start en haut à gauche
+  let bouton_start = this.add.image(150, 70, "imageBoutonPlay") // <-- position modifiée
+    .setScale(0.5)
+    .setInteractive({ useHandCursor: true });
 
-    bouton_start.on("pointerup", () => {
-      this.scene.switch("accueil");
-    });
-  }
+  bouton_start.on("pointerup", () => {
+    this.scene.start("accueil");
+  });
+}
 }
