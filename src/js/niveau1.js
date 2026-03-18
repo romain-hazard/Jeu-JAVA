@@ -249,7 +249,7 @@ export default class niveau1 extends Phaser.Scene {
       this.player.setVelocityY(300);
     }
 
-    let vitesse = 0;
+    let vitesse = 50;
 
 
 
