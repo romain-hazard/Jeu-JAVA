@@ -8,14 +8,14 @@ export default class menu extends Phaser.Scene {
   preload() {
     this.load.image("menu_fond", "src/assets/menu_fond.png");
     this.load.image("imageBoutonPlay", "src/assets/start.png");
-    this.load.image("consigne_fond", "src/assets/menu_consigne.png");
+    this.load.image("consigne_fond", "src/assets/fond_consigne_2.png");
   }
 
   create() {
     this.showMenu();
   }
 
-  // 🔹 Écran menu
+  
   showMenu() {
     const width = this.sys.game.config.width;
     const height = this.sys.game.config.height;
@@ -35,8 +35,6 @@ export default class menu extends Phaser.Scene {
     });
   }
 
-  // 🔹 Écran consignes
-  // Écran consignes
 showConsignes() {
   const width = this.sys.game.config.width;
   const height = this.sys.game.config.height;
@@ -47,8 +45,8 @@ showConsignes() {
   bg.displayWidth = width;
   bg.displayHeight = height;
 
-  // Déplacer le bouton start en haut à gauche
-  let bouton_start = this.add.image(150, 70, "imageBoutonPlay") // <-- position modifiée
+  
+  let bouton_start = this.add.image(150, 70, "imageBoutonPlay") 
     .setScale(0.5)
     .setInteractive({ useHandCursor: true });
 
