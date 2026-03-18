@@ -6,7 +6,6 @@ import niveau3 from "/src/js/niveau3.js";
 import accueil from "/src/js/accueil.js";
 import menu from "/src/js/menu.js";
 
-
 var config = {
   type: Phaser.AUTO,
   width: 1390,
