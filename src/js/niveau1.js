@@ -212,7 +212,7 @@ export default class niveau1 extends Phaser.Scene {
       frames: [{ key: "potion", frame: 0 }],
       frameRate: 4
     });
-    Potion.anims.play('Potion');
+    groupe_potions.anims.play('Potion');
 
     this.physics.add.overlap(this.player, groupe_potions, ramasserPotion, null, this);
 
@@ -233,9 +233,7 @@ if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
 if (this.physics.overlap(this.player, this.portal_retour1)){
       this.son_reussite.play();
       this.son_background.stop();
-      this.time.delayedCall(3000, () => {
-        this.scene.start("accueil", { x: 1056, y: 256 });
-      });
+      this.scene.start("accueil", { x: 588, y: 384 });}
     }
 
 
