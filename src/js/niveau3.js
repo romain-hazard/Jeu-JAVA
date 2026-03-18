@@ -130,7 +130,7 @@ hitMonster(bullet, monster) {
     }
   });
 
-    this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte3");
+    
 
     this.player = this.physics.add.sprite(33, 192, "img_perso");
     this.player.direction = 'right';
@@ -315,15 +315,6 @@ if (this.physics.overlap(this.player, this.portal_retour3)){
         monster.anims.play("anim_face_m");
       }
     });
-
-
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.porte_retour)) {
-        console.log("niveau 3 : retour vers selection");
-        this.scene.switch("selection");
-      }
-    }
-
 
 
 

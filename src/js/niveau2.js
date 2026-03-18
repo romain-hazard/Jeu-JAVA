@@ -122,7 +122,7 @@ export default class niveau2 extends Phaser.Scene {
       }
     });
 
-    this.porte_retour = this.physics.add.staticSprite(33, 48, "img_porte2");
+    
 
     this.player = this.physics.add.sprite(100, 300, "img_perso");
     this.player.refreshBody();
@@ -242,6 +242,7 @@ export default class niveau2 extends Phaser.Scene {
 
       this.physics.moveToObject(monsters, this.player, vitesse);
 
+<<<<<<< HEAD
       if (monsters.body.velocity.x < 0) {
         monsters.anims.play("anim_tourne_gauche_m", true);
       } else if (monsters.body.velocity.x > 0) {
@@ -256,6 +257,16 @@ export default class niveau2 extends Phaser.Scene {
         this.scene.switch("selection");
       }
     }
+=======
+  if (monsters.body.velocity.x < 0) {
+    monsters.anims.play("anim_tourne_gauche_m", true);
+  } else if (monsters.body.velocity.x > 0) {
+    monsters.anims.play("anim_tourne_droite_m", true);
+  } else {
+    monsters.anims.play("anim_face_m");
+  }});
+    
+>>>>>>> 8278cb01861bcbfa98cb5295cf7875e6681e568c
   }
 
 }
