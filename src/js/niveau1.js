@@ -1,7 +1,6 @@
 import * as fct from "/src/js/fonctions.js";
 
-var groupe_potions;
-var monsters;
+
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -197,11 +196,11 @@ export default class niveau1 extends Phaser.Scene {
     });
 
 
-    groupe_potions = this.physics.add.group();
-    groupe_potions.create(1024, 96, "potion");
-    groupe_potions.create(768, 480, "potion");
-    this.physics.add.collider(groupe_potions, calque_plateformes);
-    this.physics.add.overlap(this.player, groupe_potions, ramasserPotion, null, this);
+    this.groupe_potions = this.physics.add.group();
+    this.groupe_potions.create(1024, 96, "potion");
+    this.groupe_potions.create(768, 480, "potion");
+    this.physics.add.collider(this.groupe_potions, calque_plateformes);
+    this.physics.add.overlap(this.player, this.groupe_potions, ramasserPotion, null, this);
 
     this.anims.create({
       key: "Potion",
@@ -209,7 +208,7 @@ export default class niveau1 extends Phaser.Scene {
       frameRate: 4
     });
 
-    groupe_potions.children.iterate(function iterateur(Potions) {
+    this.groupe_potions.children.iterate(function iterateur(Potions) {
       Potions.anims.play('Potion');
     });
 
@@ -224,13 +223,6 @@ export default class niveau1 extends Phaser.Scene {
 
     this.portal_retour1.anims.play("portal_tourne", true);
 
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.portal_retour1)) {
-        this.son_reussite.play();
-        this.son_background.stop();
-        this.scene.start("accueil", { x: 588, y: 384 });
-      }
-    }
 
 
 
@@ -271,11 +263,18 @@ export default class niveau1 extends Phaser.Scene {
       }
     });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.portal_retour1)) {
+      if (this.physics.overlap(this.player, this.portal_retour1)&&
+        this.groupe_potions.countActive(true) === 0
+      ) {
         this.son_reussite.play();
         this.son_background.stop();
         this.time.delayedCall(3000, () => {
           this.scene.start("accueil", { x: 1056, y: 256 });
+        });
+      }else {
+        this.add.text(this.player.x, this.player.y - 20, "Ramasse toutes les potions !", {
+        fontSize: "16px",
+        fill: "#ff0000"
         });
       }
     }
@@ -315,7 +314,13 @@ export default class niveau1 extends Phaser.Scene {
       }
     });
 
-    
+    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+      if (this.physics.overlap(this.player, this.porte_retour)) {
+        console.log("niveau 1 : retour vers selection");
+        this.son_background.stop();
+        this.scene.switch("selection");
+      }
+    }
 
 
 
