@@ -44,7 +44,7 @@ export default class accueil extends Phaser.Scene {
     this.son_labo = this.sound.add('labo');
     this.son_labo.play({
       loop: true,
-      volume: 4
+      volume: 0.2
     });
 
     this.anims.create({
@@ -103,10 +103,18 @@ const calque_mur = carteAccueil.createLayer(
 );
 
     
-    this.add.text(400, 100, "Vous êtes dans le accueil", {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      fontSize: "22pt"
-    });
+   WebFont.load({
+    custom: {
+      families: ['plasdrip']
+    },
+    active: () => {
+      this.add.text(400, 100, "Vous etes dans l'accueil", {
+        fontFamily: 'plasdrip',
+        fontSize: "22pt",
+        color: '#37d83c'
+      });
+    }
+  });
 
     this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte3");
 

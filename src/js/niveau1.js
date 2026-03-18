@@ -124,10 +124,18 @@ export default class niveau1 extends Phaser.Scene {
 
 
 
-    this.add.text(400, 100, "Vous êtes dans le niveau 1", {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      fontSize: "22pt"
-    });
+    WebFont.load({
+    custom: {
+      families: ['plasdrip']
+    },
+    active: () => {
+      this.add.text(400, 100, "Vous êtes dans le niveau 1", {
+        fontFamily: 'plasdrip',
+        fontSize: "22pt",
+        color: '#37d83c'
+      });
+    }
+  });
 
     this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte1");
 
@@ -221,6 +229,7 @@ export default class niveau1 extends Phaser.Scene {
 
     this.portal_retour1.anims.play("portal_tourne", true);
 
+<<<<<<< HEAD
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.portal_retour1)) {
         this.son_background.stop();
@@ -228,6 +237,13 @@ export default class niveau1 extends Phaser.Scene {
         this.scene.start("accueil", { x: 588, y: 384 });
         this.son_reussite.stop();
       }
+=======
+if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+if (this.physics.overlap(this.player, this.portal_retour1)){
+      this.son_reussite.play();
+      this.son_background.stop();
+      this.scene.start("accueil", { x: 588, y: 384 });}
+>>>>>>> fd71c14d633f24efe64c19e992310c2331e7aa23
     }
 
 
