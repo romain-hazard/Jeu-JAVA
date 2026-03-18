@@ -242,22 +242,6 @@ export default class niveau2 extends Phaser.Scene {
 
       this.physics.moveToObject(monsters, this.player, vitesse);
 
-<<<<<<< HEAD
-      if (monsters.body.velocity.x < 0) {
-        monsters.anims.play("anim_tourne_gauche_m", true);
-      } else if (monsters.body.velocity.x > 0) {
-        monsters.anims.play("anim_tourne_droite_m", true);
-      } else {
-        monsters.anims.play("anim_face_m");
-      }
-    });
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.porte_retour)) {
-        console.log("niveau 2 : retour vers selection");
-        this.scene.switch("selection");
-      }
-    }
-=======
   if (monsters.body.velocity.x < 0) {
     monsters.anims.play("anim_tourne_gauche_m", true);
   } else if (monsters.body.velocity.x > 0) {
@@ -266,7 +250,6 @@ export default class niveau2 extends Phaser.Scene {
     monsters.anims.play("anim_face_m");
   }});
     
->>>>>>> 8278cb01861bcbfa98cb5295cf7875e6681e568c
   }
 
 }
