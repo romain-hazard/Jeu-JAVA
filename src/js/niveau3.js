@@ -34,9 +34,37 @@ export default class niveau3 extends Phaser.Scene {
     this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
 
 
-
+    this.load.image("bullet", "src/assets/Slime.png")
 
   }
+
+tirer() {
+  let coefDir = (this.player.direction === 'left') ? -1 : 1;
+
+  let bullet = this.groupeBullets.create(
+    this.player.x + (25 * coefDir),
+    this.player.y,
+    'bullet'
+  );
+
+  bullet.setVelocity(600 * coefDir, 0);
+  bullet.body.allowGravity = false;
+  bullet.setCollideWorldBounds(true);
+  bullet.body.onWorldBounds = true;
+  bullet.setScale(0.3);
+  bullet.setDepth(5);
+}
+
+hitMonster(bullet, monster) {
+  monster.pointsVie--;
+
+  if (monster.pointsVie <= 0) {
+    monster.destroy();
+  }
+
+  bullet.destroy();
+}
+
 
   create() {
 
@@ -89,14 +117,28 @@ export default class niveau3 extends Phaser.Scene {
       [tileset1, tileset2]
     );
 
-    this.add.text(400, 100, "Vous êtes dans le niveau 3", {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      fontSize: "22pt"
-    });
+    WebFont.load({
+    custom: {
+      families: ['plasdrip']
+    },
+    active: () => {
+      this.add.text(400, 100, "Vous êtes dans le niveau 3", {
+        fontFamily: 'plasdrip',
+        fontSize: "22pt",
+        color: '#37d83c'
+      });
+    }
+  });
 
     this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte3");
 
     this.player = this.physics.add.sprite(33, 192, "img_perso");
+    this.player.direction = 'right';
+    this.boutonFeu = this.input.keyboard.addKey('Z');
+    this.groupeBullets = this.physics.add.group();
+
+
+
 
     calque_s_3.setCollisionByProperty({ estSolide: true });
     calque_o_3.setCollisionByProperty({ estSolide: true });
@@ -135,11 +177,23 @@ export default class niveau3 extends Phaser.Scene {
       monster.body.allowGravity = false;
       monster.setMaxVelocity(150, 150);
       monster.setDrag(50, 50);
-
+      monster.pointsVie = 3;
     }
 
-
+    this.physics.add.overlap(this.groupeBullets, this.monsters, this.hitMonster, null, this);
     this.physics.add.collider(this.monsters, calque_s_3);
+    this.physics.add.collider(this.groupeBullets, calque_s_3, (bullet) => {
+  bullet.destroy();
+});
+
+this.physics.world.on("worldbounds", (body) => {
+  let obj = body.gameObject;
+  if (this.groupeBullets.contains(obj)) {
+    obj.destroy();
+  }
+});
+
+
 
     this.anims.create({
       key: "anim_tourne_gauche_m",
@@ -204,6 +258,18 @@ this.portal_retour3.setDepth(4);
 
   update() {
 
+
+    if (Phaser.Input.Keyboard.JustDown(this.boutonFeu)) {
+  this.tirer();
+}
+
+
+if (this.clavier.left.isDown) {
+  this.player.direction = 'left';
+}
+else if (this.clavier.right.isDown) {
+  this.player.direction = 'right';
+}
 
      this.portal_retour3.anims.play("portal_tourne", true);
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {

@@ -113,10 +113,18 @@ export default class niveau1 extends Phaser.Scene {
 
 
 
-    this.add.text(400, 100, "Vous êtes dans le niveau 1", {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      fontSize: "22pt"
-    });
+    WebFont.load({
+    custom: {
+      families: ['plasdrip']
+    },
+    active: () => {
+      this.add.text(400, 100, "Vous êtes dans le niveau 1", {
+        fontFamily: 'plasdrip',
+        fontSize: "22pt",
+        color: '#37d83c'
+      });
+    }
+  });
 
     this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte1");
 

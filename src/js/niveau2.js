@@ -102,10 +102,18 @@ export default class niveau2 extends Phaser.Scene {
   monster.setDrag(50, 50);
 }
 
-    this.add.text(400, 100, "Vous êtes dans le niveau 2", {
-      fontFamily: 'Georgia, "Goudy Bookletter 1911", Times, serif',
-      fontSize: "22pt"
-    });
+    WebFont.load({
+    custom: {
+      families: ['plasdrip']
+    },
+    active: () => {
+      this.add.text(400, 100, "Vous êtes dans le niveau 2", {
+        fontFamily: 'plasdrip',
+        fontSize: "22pt",
+        color: '#37d83c'
+      });
+    }
+  });
 
     this.porte_retour = this.physics.add.staticSprite(33, 48, "img_porte2");
 
