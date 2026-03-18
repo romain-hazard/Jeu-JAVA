@@ -1,4 +1,4 @@
-class menu extends Phaser.Scene {
+export default class menu extends Phaser.Scene {
   constructor() {
     super({ key: "menu" });
   }
@@ -24,8 +24,8 @@ class menu extends Phaser.Scene {
 
    
 
-    var bouton_consigne=this.add.image(300, 450, "Bouton_consigne").setDepth(1);
-    bouton_consigne.setInteractive();
+    //var bouton_consigne=this.add.image(300, 450, "Bouton_consigne").setDepth(1);
+    //bouton_consigne.setInteractive();
 
     //Cas ou la sourris clique sur le bouton play :
     // on lance le niveau 1
