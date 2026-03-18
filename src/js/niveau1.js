@@ -231,7 +231,7 @@ export default class niveau1 extends Phaser.Scene {
         this.son_reussite.play();
         this.son_background.stop();
         this.time.delayedCall(3000, () => {
-          this.scene.start("accueil", { x: 1056, y: 256 });
+          this.scene.start("accueil", { x: 896 ,y: 480 });
         });
       } else {
         this.add.text(this.player.x, this.player.y - 20, "Ramasse toutes les potions !", {
@@ -279,15 +279,7 @@ export default class niveau1 extends Phaser.Scene {
         monster.anims.play("anim_face_m");
       }
     });
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.portal_retour1)) {
-        this.son_reussite.play();
-        this.son_background.stop();
-        this.time.delayedCall(3000, () => {
-          this.scene.start("accueil", { x: 1056, y: 256 });
-        });
-      }
-    }
+   
 
 
     if (this.clavier.left.isDown) {
