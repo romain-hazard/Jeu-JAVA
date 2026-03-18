@@ -67,7 +67,7 @@ export default class niveau1 extends Phaser.Scene {
 
     this.son_background.play({
       loop: true,
-      volume: 0.5
+      volume: 2
     });
 
     const carteDuNiveau1 = this.add.tilemap("carte1");

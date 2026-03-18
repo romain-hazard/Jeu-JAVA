@@ -48,7 +48,7 @@ export default class niveau3 extends Phaser.Scene {
 
     this.son_background.play({
       loop: true,
-      volume: 0.5
+      volume: 2
     });
 
 
