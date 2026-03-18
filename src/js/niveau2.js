@@ -53,7 +53,7 @@ export default class niveau2 extends Phaser.Scene {
 
     this.son_background.play({
       loop: true,
-      volume: 3
+      volume: 0.5
     });
 
 
@@ -175,15 +175,8 @@ if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
 if (this.physics.overlap(this.player, this.portal_retour2)){
       this.son_background.stop();
       this.son_reussite.play(
-        {volume: 2}
+        {volume: 0.8}
       );
-      let texteMission = this.add.text(2752, 448, "Mission passed, respect +", {
-    fontFamily: 'plasdrip',
-    fontSize: "32pt",
-    color: '#37d83c'
-});
-texteMission.setOrigin(0.5);
-texteMission.setDepth(10);
       this.time.delayedCall(3000, () => {
         this.scene.start("accueil", { x: 1088, y: 256 });
       });
