@@ -17,7 +17,7 @@ export default class niveau3 extends Phaser.Scene {
     });
     this.load.image("Phaser_tuiles_dejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuiles_dejeu2", "src/assets/laboratory_objects_1.png");
-    this.load.tilemapTiledJSON("niveau3", "src/assets/map_niveau_3_mov.json");
+    this.load.tilemapTiledJSON("niveau3", "src/assets/map_niveau_3_noir.json");
 
     this.load.spritesheet("Sprite_monster_1_", "src/assets/Sprite_monster.png", {
       frameWidth: 65,
@@ -143,6 +143,9 @@ hitMonster(bullet, monster) {
     calque_s_3.setCollisionByProperty({ estSolide: true });
     calque_o_3.setCollisionByProperty({ estSolide: true });
 
+
+    
+
     this.physics.add.collider(this.player, calque_s_3);
     this.physics.add.collider(this.player, calque_o_3);
     this.player.refreshBody();
@@ -252,6 +255,16 @@ this.portal_retour3= this.physics.add.sprite(2784,448,"img_portal");
 this.portal_retour3.body.allowGravity = false;
 this.portal_retour3.setDepth(4); 
 
+
+
+calque_3.setCollisionByProperty({ estSolide: true });
+
+// Collisions avec joueur et monstres
+this.physics.add.collider(this.player, calque_3);
+this.physics.add.collider(this.monsters, calque_3);
+this.physics.add.collider(this.groupeBullets, calque_3, (bullet) => {
+  bullet.destroy();
+});
 
   }
 
