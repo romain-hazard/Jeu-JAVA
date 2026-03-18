@@ -1,6 +1,6 @@
 import * as fct from "/src/js/fonctions.js";
 
-var groupe_potions;
+
 
 export default class niveau2 extends Phaser.Scene {
   // constructeur de la classe
@@ -142,11 +142,11 @@ export default class niveau2 extends Phaser.Scene {
 
 
 
-    groupe_potions = this.physics.add.group();
-    groupe_potions.create(2080, 128, "potion");
-    groupe_potions.create(1312, 576, "potion");
-    this.physics.add.collider(groupe_potions, calque_plateformes);
-    this.physics.add.overlap(this.player, groupe_potions, ramasserPotion, null, this);
+    this.groupe_potions = this.physics.add.group();
+    this.groupe_potions.create(2080, 128, "potion");
+    this.groupe_potions.create(1312, 576, "potion");
+    this.physics.add.collider(this.groupe_potions, calque_plateformes);
+    this.physics.add.overlap(this.player, this.groupe_potions, ramasserPotion, null, this);
 
     this.anims.create({
       key: "Potion",
@@ -154,7 +154,7 @@ export default class niveau2 extends Phaser.Scene {
       frameRate: 4
     });
 
-    groupe_potions.children.iterate(function iterateur(Potions) {
+    this.groupe_potions.children.iterate(function iterateur(Potions) {
       Potions.anims.play('Potion');
     });
 
@@ -200,20 +200,24 @@ export default class niveau2 extends Phaser.Scene {
 
 
     this.portal_retour2.anims.play("portal_tourne", true);
+    
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.portal_retour2) &&
         this.groupe_potions.countActive(true) === 0
       ) {
+        this.son_reussite.play();
         this.son_background.stop();
-        this.son_reussite.play(
-          { volume: 0.8 }
-        );
         this.time.delayedCall(3000, () => {
-          this.scene.start("accueil", { x: 1088, y: 256 });
+          this.scene.start("accueil", { x: 1088 ,y: 256 });
         });
-
+      } else {
+        this.add.text(this.player.x, this.player.y - 20, "Ramasse toutes les potions !", {
+          fontSize: "16px",
+          fill: "#ff0000"
+        });
       }
     }
+
 
 
     if (this.clavier.left.isDown) {
@@ -242,22 +246,6 @@ export default class niveau2 extends Phaser.Scene {
 
       this.physics.moveToObject(monsters, this.player, vitesse);
 
-<<<<<<< HEAD
-      if (monsters.body.velocity.x < 0) {
-        monsters.anims.play("anim_tourne_gauche_m", true);
-      } else if (monsters.body.velocity.x > 0) {
-        monsters.anims.play("anim_tourne_droite_m", true);
-      } else {
-        monsters.anims.play("anim_face_m");
-      }
-    });
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.porte_retour)) {
-        console.log("niveau 2 : retour vers selection");
-        this.scene.switch("selection");
-      }
-    }
-=======
   if (monsters.body.velocity.x < 0) {
     monsters.anims.play("anim_tourne_gauche_m", true);
   } else if (monsters.body.velocity.x > 0) {
@@ -266,7 +254,6 @@ export default class niveau2 extends Phaser.Scene {
     monsters.anims.play("anim_face_m");
   }});
     
->>>>>>> 8278cb01861bcbfa98cb5295cf7875e6681e568c
   }
 
 }
