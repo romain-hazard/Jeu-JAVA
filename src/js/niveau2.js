@@ -150,7 +150,7 @@ export default class niveau2 extends Phaser.Scene {
     });
 this.physics.add.overlap(this.player, this.monsters,chocMonster2, null, this);
 
-this.portal_retour2= this.physics.add.sprite(480,384,"img_portal");
+this.portal_retour2= this.physics.add.sprite(2752,448,"img_portal");
 this.physics.add.collider(this.portal_retour2, calque_plateformes);
 
 
