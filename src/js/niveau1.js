@@ -101,7 +101,6 @@ export default class niveau1 extends Phaser.Scene {
       "Phaser_tuilesdejeu_3"
     );
 
-
     const calque_background = carteDuNiveau1.createLayer(
       "Calque_de_Tuiles_2",
       [tileset1, tileset2, tileset3]
@@ -117,10 +116,7 @@ export default class niveau1 extends Phaser.Scene {
       [tileset1, tileset2, tileset3]
     );
 
-
     calque_plateformes.setCollisionByProperty({ estSolide: true });
-
-
 
 
 
@@ -183,7 +179,6 @@ export default class niveau1 extends Phaser.Scene {
       repeat: -1
     });
 
-
     this.anims.create({
       key: "anim_face_m",
       frames: [{ key: "Sprite_monster", frame: 7 }],
@@ -217,11 +212,7 @@ export default class niveau1 extends Phaser.Scene {
       Potions.anims.play('Potion');
     });
 
-    this.anims.create({
-      key: "Potion",
-      frames: [{ key: "potion", frame: 0 }],
-      frameRate: 4
-    });
+    
 
 
 
