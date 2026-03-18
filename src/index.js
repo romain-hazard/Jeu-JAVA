@@ -22,9 +22,9 @@ var config = {
       debug: true 
     }
   },
-  scene: [selection, niveau1, niveau2, niveau3, accueil, menu ]
+  scene: [selection, menu,accueil, niveau1, niveau2, niveau3 ]
 };
 
 
 var game = new Phaser.Game(config);
-game.scene.start("selection");
+game.scene.start("menu");
