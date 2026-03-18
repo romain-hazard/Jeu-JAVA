@@ -122,7 +122,7 @@ export default class niveau2 extends Phaser.Scene {
       }
     });
 
-    this.porte_retour = this.physics.add.staticSprite(33, 48, "img_porte2");
+    
 
     this.player = this.physics.add.sprite(100, 300, "img_perso");
     this.player.refreshBody();
@@ -247,12 +247,7 @@ this.anims.create({
   } else {
     monsters.anims.play("anim_face_m");
   }});
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.porte_retour)) {
-        console.log("niveau 2 : retour vers selection");
-        this.scene.switch("selection");
-      }
-    }
+    
   }
 
 }

@@ -129,7 +129,7 @@ const calque_mur = carteAccueil.createLayer(
     }
   });
 
-    this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte3");
+    
 
 player = this.physics.add.sprite(32, 200, "img_perso");
 
@@ -242,11 +242,6 @@ else {
     player.anims.play("anim_face", true);
 }
 
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(player, this.porte_retour)) {
-        console.log("accueil : retour vers selection");
-        this.scene.switch("selection");
-      }
-    }
+    
   }
 }
