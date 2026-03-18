@@ -137,7 +137,7 @@ export default class niveau2 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 3200, 640);
     this.cameras.main.startFollow(this.player);
 
-    
+
     this.physics.add.overlap(this.player, this.monsters, chocMonster2, null, this);
 
 
@@ -171,7 +171,7 @@ export default class niveau2 extends Phaser.Scene {
 
   update() {
 
-this.anims.create({
+    this.anims.create({
       key: "anim_tourne_gauche_m",
       frames: this.anims.generateFrameNumbers("Sprite_monster_2_", {
         start: 25,
@@ -186,7 +186,7 @@ this.anims.create({
       frames: [{ key: "Sprite_monster_1_", frame: 7 }],
       frameRate: 20
     });
-
+ 
     this.anims.create({
       key: "anim_tourne_droite_m",
       frames: this.anims.generateFrameNumbers("Sprite_monster_1_", {
@@ -201,7 +201,9 @@ this.anims.create({
 
     this.portal_retour2.anims.play("portal_tourne", true);
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.portal_retour2)) {
+      if (this.physics.overlap(this.player, this.portal_retour2) &&
+        this.groupe_potions.countActive(true) === 0
+      ) {
         this.son_background.stop();
         this.son_reussite.play(
           { volume: 0.8 }
@@ -231,22 +233,23 @@ this.anims.create({
       this.player.setVelocityY(300);
     }
 
-    let vitesse = 50;
+    let vitesse = 0;
 
 
 
     this.monsters.children.iterate((monsters) => {
-  if (!monsters) return;
+      if (!monsters) return;
 
-  this.physics.moveToObject(monsters, this.player, vitesse);
+      this.physics.moveToObject(monsters, this.player, vitesse);
 
-  if (monsters.body.velocity.x < 0) {
-    monsters.anims.play("anim_tourne_gauche_m", true);
-  } else if (monsters.body.velocity.x > 0) {
-    monsters.anims.play("anim_tourne_droite_m", true);
-  } else {
-    monsters.anims.play("anim_face_m");
-  }});
+      if (monsters.body.velocity.x < 0) {
+        monsters.anims.play("anim_tourne_gauche_m", true);
+      } else if (monsters.body.velocity.x > 0) {
+        monsters.anims.play("anim_tourne_droite_m", true);
+      } else {
+        monsters.anims.play("anim_face_m");
+      }
+    });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.porte_retour)) {
         console.log("niveau 2 : retour vers selection");
