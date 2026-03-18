@@ -212,7 +212,7 @@ export default class niveau1 extends Phaser.Scene {
       Potions.anims.play('Potion');
     });
 
-    
+
 
 
 
@@ -251,6 +251,9 @@ export default class niveau1 extends Phaser.Scene {
     }
     if (this.clavier.up.isDown && this.player.body.blocked.down) {
       this.player.setVelocityY(-430);
+    }
+    if (this.clavier.down.isDown) {
+      this.player.setVelocityY(300);
     }
 
     let vitesse = 0;
@@ -297,7 +300,7 @@ export default class niveau1 extends Phaser.Scene {
       this.player.setVelocityY(-430);
     }
 
-    
+
 
 
 
@@ -316,6 +319,7 @@ export default class niveau1 extends Phaser.Scene {
         monster.anims.play("anim_face_m");
       }
     });
+
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.porte_retour)) {
         console.log("niveau 1 : retour vers selection");

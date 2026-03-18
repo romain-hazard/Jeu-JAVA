@@ -224,7 +224,9 @@ export default class niveau2 extends Phaser.Scene {
     if (this.clavier.up.isDown && this.player.body.blocked.down) {
       this.player.setVelocityY(-330);
     }
-    
+    if (this.clavier.down.isDown) {
+      this.player.setVelocityY(300);
+    }
 
     let vitesse = 0;
 
