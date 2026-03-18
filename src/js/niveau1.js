@@ -154,7 +154,7 @@ export default class niveau1 extends Phaser.Scene {
 
     this.monsters = this.physics.add.group();
 
-    for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 2; i++) {
 
       let monster = this.monsters.create(
         Phaser.Math.Between(800, 3000),
@@ -212,7 +212,7 @@ export default class niveau1 extends Phaser.Scene {
       frames: [{ key: "potion", frame: 0 }],
       frameRate: 4
     });
-    groupe_potions.anims.play('Potion');
+    Potion.anims.play('Potion');
 
     this.physics.add.overlap(this.player, groupe_potions, ramasserPotion, null, this);
 
@@ -229,21 +229,13 @@ export default class niveau1 extends Phaser.Scene {
 
     this.portal_retour1.anims.play("portal_tourne", true);
 
-<<<<<<< HEAD
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.portal_retour1)) {
-        this.son_background.stop();
-        this.son_reussite.play();
-        this.scene.start("accueil", { x: 588, y: 384 });
-        this.son_reussite.stop();
-      }
-=======
 if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
 if (this.physics.overlap(this.player, this.portal_retour1)){
       this.son_reussite.play();
       this.son_background.stop();
-      this.scene.start("accueil", { x: 588, y: 384 });}
->>>>>>> fd71c14d633f24efe64c19e992310c2331e7aa23
+      this.time.delayedCall(3000, () => {
+        this.scene.start("accueil", { x: 1056, y: 256 });
+      });
     }
 
 
