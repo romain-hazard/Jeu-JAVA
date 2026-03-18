@@ -18,7 +18,7 @@ export default class niveau1 extends Phaser.Scene {
     this.load.image("Phaser_tuilesdejeu_2", "src/assets/Tiles_scientifique.png");
     this.load.image("Phaser_tuilesdejeu_3", "src/assets/Labo.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_niveau_1.json");
-  
+
 
     this.load.spritesheet("Sprite_monster_1_", "src/assets/Sprite_monster.png", {
       frameWidth: 65,
@@ -125,17 +125,17 @@ export default class niveau1 extends Phaser.Scene {
 
 
     WebFont.load({
-    custom: {
-      families: ['plasdrip']
-    },
-    active: () => {
-      this.add.text(400, 100, "Vous êtes dans le niveau 1", {
-        fontFamily: 'plasdrip',
-        fontSize: "22pt",
-        color: '#37d83c'
-      });
-    }
-  });
+      custom: {
+        families: ['plasdrip']
+      },
+      active: () => {
+        this.add.text(400, 100, "Vous êtes dans le niveau 1", {
+          fontFamily: 'plasdrip',
+          fontSize: "22pt",
+          color: '#37d83c'
+        });
+      }
+    });
 
     this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte1");
 
@@ -207,14 +207,20 @@ export default class niveau1 extends Phaser.Scene {
     this.physics.add.collider(groupe_potions, calque_plateformes);
     this.physics.add.overlap(this.player, groupe_potions, ramasserPotion, null, this);
 
+
     this.anims.create({
       key: "Potion",
       frames: [{ key: "potion", frame: 0 }],
       frameRate: 4
     });
-    Potion.anims.play('Potion');
+    groupe_potions.children.iterate(function iterateur(Potions) {
+      Potions.anims.play('Potion');
+    });
 
-    this.physics.add.overlap(this.player, groupe_potions, ramasserPotion, null, this);
+
+
+
+
 
     this.portal_retour1 = this.physics.add.sprite(3072, 576, "img_portal");
     this.physics.add.collider(this.portal_retour1, calque_plateformes);
@@ -229,65 +235,66 @@ export default class niveau1 extends Phaser.Scene {
 
     this.portal_retour1.anims.play("portal_tourne", true);
 
-if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-if (this.physics.overlap(this.player, this.portal_retour1)){
-      this.son_reussite.play();
-      this.son_background.stop();
-      this.time.delayedCall(3000, () => {
-        this.scene.start("accueil", { x: 1056, y: 256 });
-      });
-    }
-
-
-
-    if (this.clavier.left.isDown) {
-      this.player.setVelocityX(-160);
-      this.player.anims.play("anim_tourne_gauche", true);
-    } else if (this.clavier.right.isDown) {
-      this.player.setVelocityX(160);
-      this.player.anims.play("anim_tourne_droite", true);
-    } else {
-      this.player.setVelocityX(0);
-      this.player.anims.play("anim_face");
-    }
-    if (this.clavier.up.isDown && this.player.body.blocked.down) {
-      this.player.setVelocityY(-430);
-    }
-
-    let vitesse = 0;
-
-
-
-    this.monsters.children.iterate((monster) => {
-      if (!monster) return;
-
-      // mouvement vers le joueur
-      this.physics.moveToObject(monster, this.player, vitesse);
-
-      // animation
-      if (monster.body.velocity.x < 0) {
-        monster.anims.play("anim_tourne_gauche_m", true);
-      } else if (monster.body.velocity.x > 0) {
-        monster.anims.play("anim_tourne_droite_m", true);
-      } else {
-        monster.anims.play("anim_face_m");
-      }
-    });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.porte_retour)) {
-        console.log("niveau 1 : retour vers selection");
+      if (this.physics.overlap(this.player, this.portal_retour1)) {
+        this.son_reussite.play();
         this.son_background.stop();
-        this.scene.switch("selection");
+        this.time.delayedCall(3000, () => {
+          this.scene.start("accueil", { x: 1056, y: 256 });
+        });
       }
     }
 
 
+      if (this.clavier.left.isDown) {
+        this.player.setVelocityX(-160);
+        this.player.anims.play("anim_tourne_gauche", true);
+      } else if (this.clavier.right.isDown) {
+        this.player.setVelocityX(160);
+        this.player.anims.play("anim_tourne_droite", true);
+      } else {
+        this.player.setVelocityX(0);
+        this.player.anims.play("anim_face");
+      }
+      if (this.clavier.up.isDown && this.player.body.blocked.down) {
+        this.player.setVelocityY(-430);
+      }
+
+      let vitesse = 0;
+
+
+
+      this.monsters.children.iterate((monster) => {
+        if (!monster) return;
+
+        // mouvement vers le joueur
+        this.physics.moveToObject(monster, this.player, vitesse);
+
+        // animation
+        if (monster.body.velocity.x < 0) {
+          monster.anims.play("anim_tourne_gauche_m", true);
+        } else if (monster.body.velocity.x > 0) {
+          monster.anims.play("anim_tourne_droite_m", true);
+        } else {
+          monster.anims.play("anim_face_m");
+        }
+      });
+      if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+        if (this.physics.overlap(this.player, this.porte_retour)) {
+          console.log("niveau 1 : retour vers selection");
+          this.son_background.stop();
+          this.scene.switch("selection");
+        }
+      }
 
 
 
 
+
+
+    }
   }
-}
+
 
 
 function chocMonster(un_player, un_monster) {
@@ -313,7 +320,7 @@ function chocMonster(un_player, un_monster) {
 
 
 function ramasserPotion(un_player, une_potion) {
- une_potion.disableBody(true, true);
+  une_potion.disableBody(true, true);
 }
 
 
