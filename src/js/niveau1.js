@@ -1,6 +1,7 @@
 import * as fct from "/src/js/fonctions.js";
 
 var groupe_potions;
+var monsters;
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -133,7 +134,7 @@ export default class niveau1 extends Phaser.Scene {
       }
     });
 
-    this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte1");
+    //this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte1");
 
     this.player = this.physics.add.sprite(128, 550, "img_perso");
     this.player.refreshBody();
@@ -148,11 +149,11 @@ export default class niveau1 extends Phaser.Scene {
     this.cameras.main.setBounds(0, 0, 3200, 640);
     this.cameras.main.startFollow(this.player);
 
-    this.monsters = this.physics.add.group();
+    monsters = this.physics.add.group();
 
     for (let i = 0; i < 2; i++) {
 
-      let monster = this.monsters.create(
+      let monster = monsters.create(
         Phaser.Math.Between(800, 3000),
         Phaser.Math.Between(100, 500),
         "Sprite_monster_1_"
@@ -166,14 +167,14 @@ export default class niveau1 extends Phaser.Scene {
     }
 
 
-    this.physics.add.overlap(this.player, this.monsters, chocMonster, null, this);
-    this.physics.add.collider(this.monsters, calque_plateformes);
+    this.physics.add.overlap(this.player, monsters, chocMonster, null, this);
+    this.physics.add.collider(monsters, calque_plateformes);
 
     this.anims.create({
       key: "anim_tourne_gauche_m",
       frames: this.anims.generateFrameNumbers("Sprite_monster_2_", {
-        start: 23,
-        end: 26,
+        start: 25,
+        end: 27,
       }),
       frameRate: 10,
       repeat: -1
@@ -181,13 +182,13 @@ export default class niveau1 extends Phaser.Scene {
 
     this.anims.create({
       key: "anim_face_m",
-      frames: [{ key: "Sprite_monster", frame: 7 }],
+      frames: [{ key: "Sprite_monster_1_", frame: 7 }],
       frameRate: 20
     });
 
     this.anims.create({
       key: "anim_tourne_droite_m",
-      frames: this.anims.generateFrameNumbers("Sprite_monster", {
+      frames: this.anims.generateFrameNumbers("Sprite_monster_1_", {
         start: 23,
         end: 26,
       }),
@@ -212,14 +213,8 @@ export default class niveau1 extends Phaser.Scene {
       Potions.anims.play('Potion');
     });
 
-
-
-
-
     this.portal_retour1 = this.physics.add.sprite(3072, 576, "img_portal");
     this.physics.add.collider(this.portal_retour1, calque_plateformes);
-
-
 
 
 
@@ -256,11 +251,11 @@ export default class niveau1 extends Phaser.Scene {
       this.player.setVelocityY(300);
     }
 
-    let vitesse = 0;
+    let vitesse = 50;
 
 
 
-    this.monsters.children.iterate((monster) => {
+    monsters.children.iterate((monster) => {
       if (!monster) return;
 
       // mouvement vers le joueur
@@ -304,7 +299,7 @@ export default class niveau1 extends Phaser.Scene {
 
 
 
-    this.monsters.children.iterate((monster) => {
+    monsters.children.iterate((monster) => {
       if (!monster) return;
 
       // mouvement vers le joueur
@@ -320,13 +315,7 @@ export default class niveau1 extends Phaser.Scene {
       }
     });
 
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.porte_retour)) {
-        console.log("niveau 1 : retour vers selection");
-        this.son_background.stop();
-        this.scene.switch("selection");
-      }
-    }
+    
 
 
 

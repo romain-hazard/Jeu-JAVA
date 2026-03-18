@@ -1,5 +1,6 @@
 
 var portal;
+var player;
 
 export default class accueil extends Phaser.Scene {
   // constructeur de la classe
@@ -17,6 +18,14 @@ export default class accueil extends Phaser.Scene {
 
 
   preload() {
+    this.load.spritesheet("img_perso", "src/assets/Spritesheet.jpg", {
+      frameWidth: 55,
+      frameHeight: 61,
+    });
+    this.load.spritesheet("img_perso2", "src/assets/Spritesheet2.jpg", {
+      frameWidth: 55,
+      frameHeight: 61,
+    });
     this.load.image("Phaser_tuilesdejeu1", "src/assets/laboratory.png");
     this.load.image("Phaser_tuilesdejeu2", "src/assets/laboratory_objects_1.png");
     this.load.tilemapTiledJSON("accueil", "src/assets/map_accueil.json");  
@@ -39,6 +48,10 @@ export default class accueil extends Phaser.Scene {
     this.groupe_plateformes.create(600, 584, "img_plateforme");
     // ajout d'un texte distintcif  du niveau
     */
+
+
+ 
+
 
     var son_labo;
     this.son_labo = this.sound.add('labo');
@@ -118,12 +131,12 @@ const calque_mur = carteAccueil.createLayer(
 
     this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte3");
 
-    this.player = this.physics.add.sprite(32, 200, "img_perso");
+player = this.physics.add.sprite(32, 200, "img_perso");
 
 if (this.spawnX !== undefined && this.spawnY !== undefined) {
-  this.player.setPosition(this.spawnX, this.spawnY);
+  player.setPosition(this.spawnX, this.spawnY);
 } else {
-  this.player.setPosition(32, 200); 
+  player.setPosition(32, 200); 
 }
 
 
@@ -135,31 +148,58 @@ if (this.spawnX !== undefined && this.spawnY !== undefined) {
     calque_perimetre.setCollisionByExclusion([-1]);
     calque_deco.setCollisionByExclusion([-1]);
     calque_accessoire.setCollisionByExclusion([-1]);
-    this.player.refreshBody();
-    this.player.setBounce(0.2);
-    this.player.setCollideWorldBounds(true);
+    player.refreshBody();
+    player.setBounce(0.2);
+    player.setCollideWorldBounds(true);
     this.clavier = this.input.keyboard.createCursorKeys();
-    this.physics.add.collider(this.player, calque_perimetre);
-    this.physics.add.collider(this.player, calque_deco);
-    this.physics.add.collider(this.player, calque_sol);
-    this.physics.add.collider(this.player, calque_mur);
+    this.physics.add.collider(player, calque_perimetre);
+    this.physics.add.collider(player, calque_deco);
+    this.physics.add.collider(player, calque_sol);
+    this.physics.add.collider(player, calque_mur);
 
 this.physics.world.gravity.y = 0;
 
-  this.player.setCollideWorldBounds(true);
-  this.cameras.main.startFollow(this.player);
+  player.setCollideWorldBounds(true);
+  this.cameras.main.startFollow(player);
   this.physics.world.setBounds(0, 0, 3200, 640);
   this.cameras.main.setBounds(0, 0, 3200, 640);
-  this.cameras.main.startFollow(this.player); 
+  this.cameras.main.startFollow(player); 
 
-  
+  this.anims.create({
+      key: "anim_tourne_gauche", 
+      frames: this.anims.generateFrameNumbers("img_perso", {
+        start: 0,
+        end: 8,
+      }), 
+      frameRate: 10, 
+      repeat: -1 
+    });
+
+    
+    this.anims.create({
+      key: "anim_face",
+      frames: [{ key: "img_perso", frame: 7 }],
+      frameRate: 20
+    });
+
+    this.anims.create({
+      key: "anim_tourne_droite",
+      frames: this.anims.generateFrameNumbers("img_perso2", {
+        start: 0,
+        end: 8,
+      }),
+      frameRate: 10,
+      repeat: -1
+    });
+
+
   
   }
 
   update() {
     
 let vitesse = 160;
-this.player.setVelocity(0,0);
+player.setVelocity(0,0);
 
 this.portal1.anims.play("portal_tourne", true);
 this.portal2.anims.play("portal_tourne", true);
@@ -167,15 +207,15 @@ this.portal3.anims.play("portal_tourne", true);
 
 
 if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-if (this.physics.overlap(this.player, this.portal1)){
+if (this.physics.overlap(player, this.portal1)){
       this.son_labo.stop();
       this.scene.start("niveau1");}
 
-if (this.physics.overlap(this.player, this.portal2)){
+if (this.physics.overlap(player, this.portal2)){
       this.son_labo.stop();
       this.scene.switch("niveau2");}
 
-if (this.physics.overlap(this.player, this.portal3)){
+if (this.physics.overlap(player, this.portal3)){
       this.son_labo.stop();
       this.scene.switch("niveau3");}
 }
@@ -183,27 +223,27 @@ if (this.physics.overlap(this.player, this.portal3)){
 
 
 if (this.clavier.left.isDown) {
-    this.player.setVelocityX(-vitesse);
-    this.player.anims.play("anim_tourne_gauche", true);
+    player.setVelocityX(-vitesse);
+    player.anims.play("anim_tourne_gauche", true);
 }
 else if (this.clavier.right.isDown) {
-    this.player.setVelocityX(vitesse);
-    this.player.anims.play("anim_tourne_droite", true);
+    player.setVelocityX(vitesse);
+    player.anims.play("anim_tourne_droite", true);
 }
 else if (this.clavier.up.isDown) {
-    this.player.setVelocityY(-vitesse);
-    this.player.anims.play("anim_tourne_droite", true);   
+    player.setVelocityY(-vitesse);
+    player.anims.play("anim_tourne_droite", true);   
 }
 else if (this.clavier.down.isDown) {
-    this.player.setVelocityY(vitesse);
-    this.player.anims.play("anim_tourne_gauche", true);   
+    player.setVelocityY(vitesse);
+    player.anims.play("anim_tourne_gauche", true);   
 }
 else {
-    this.player.anims.play("anim_face", true);
+    player.anims.play("anim_face", true);
 }
 
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.porte_retour)) {
+      if (this.physics.overlap(player, this.porte_retour)) {
         console.log("accueil : retour vers selection");
         this.scene.switch("selection");
       }

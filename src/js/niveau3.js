@@ -213,7 +213,7 @@ this.physics.world.on("worldbounds", (body) => {
 
     this.anims.create({
       key: "anim_tourne_droite_m",
-      frames: this.anims.generateFrameNumbers("Sprite_monster", {
+      frames: this.anims.generateFrameNumbers("Sprite_monster_1_", {
         start: 23,
         end: 26,
       }),

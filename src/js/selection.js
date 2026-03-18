@@ -3,7 +3,7 @@ import * as fct from "/src/js/fonctions.js";
 var player; 
 var clavier;
 var groupe_plateformes;
-var monster;
+
 
 
 export default class selection extends Phaser.Scene {
@@ -79,6 +79,8 @@ export default class selection extends Phaser.Scene {
     this.porte4 = this.physics.add.staticSprite(600, 234, "img_porte3");
     
     
+
+
     player = this.physics.add.sprite(100, 450, "img_perso");
     monster=this.physics.add.sprite(200,300,"Sprite_monster");
     monster.setBounce(1); 
