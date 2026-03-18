@@ -1,4 +1,6 @@
+import * as fct from "/src/js/fonctions.js";
 
+var groupe_potions;
 
 export default class niveau2 extends Phaser.Scene {
   // constructeur de la classe
@@ -17,18 +19,23 @@ export default class niveau2 extends Phaser.Scene {
     this.load.spritesheet("Sprite_monster_1_", "src/assets/Sprite_monster.png", {
       frameWidth: 65,
       frameHeight: 77,
-    }
-    );
+    });
 
     this.load.spritesheet("Sprite_monster_2_", "src/assets/Sprite_monster_2.png", {
       frameWidth: 65,
       frameHeight: 77,
-    }
-    );
-     this.load.spritesheet("img_portal", "src/assets/portal.png",{
+    });
+
+    this.load.spritesheet("img_portal", "src/assets/portal.png", {
       frameWidth: 66,
       frameHeight: 68,
     });
+
+    this.load.spritesheet("potion", "src/assets/potion.png", {
+      frameWidth: 18,
+      frameHeight: 24,
+    });
+
     this.load.audio('scream', 'src/assets/sound_scream.mp3');
     this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
     this.load.audio('reussite', 'src/assets/Mission_passed_sound.mp3');
@@ -38,7 +45,7 @@ export default class niveau2 extends Phaser.Scene {
 
 
 
-  
+
 
   create() {
 
@@ -70,7 +77,6 @@ export default class niveau2 extends Phaser.Scene {
       "Phaser_tuilesdejeu_2_"
     );
 
-
     const calque_background = carteDuNiveau2.createLayer(
       "calque_background",
       [tileset1, tileset2]
@@ -87,36 +93,34 @@ export default class niveau2 extends Phaser.Scene {
     );
     calque_plateformes.setCollisionByExclusion([-1]);
 
-   
     this.monsters = this.physics.add.group();
 
-  for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 3; i++) {
+      let monster = this.monsters.create(
+        Phaser.Math.Between(800, 3000),
+        Phaser.Math.Between(100, 500),
+        "Sprite_monster_1_"
+      );
 
-  let monster = this.monsters.create(
-    Phaser.Math.Between(800, 3000),
-    Phaser.Math.Between(100, 500),
-    "Sprite_monster_1_"
-  );
-
-  monster.setBounce(1);
-  monster.setCollideWorldBounds(true);
-  monster.body.allowGravity = false;
-  monster.setMaxVelocity(150, 150);
-  monster.setDrag(50, 50);
-}
+      monster.setBounce(1);
+      monster.setCollideWorldBounds(true);
+      monster.body.allowGravity = false;
+      monster.setMaxVelocity(150, 150);
+      monster.setDrag(50, 50);
+    }
 
     WebFont.load({
-    custom: {
-      families: ['plasdrip']
-    },
-    active: () => {
-      this.add.text(400, 100, "Vous êtes dans le niveau 2", {
-        fontFamily: 'plasdrip',
-        fontSize: "22pt",
-        color: '#37d83c'
-      });
-    }
-  });
+      custom: {
+        families: ['plasdrip']
+      },
+      active: () => {
+        this.add.text(400, 100, "Vous êtes dans le niveau 2", {
+          fontFamily: 'plasdrip',
+          fontSize: "22pt",
+          color: '#37d83c'
+        });
+      }
+    });
 
     this.porte_retour = this.physics.add.staticSprite(33, 48, "img_porte2");
 
@@ -159,29 +163,51 @@ export default class niveau2 extends Phaser.Scene {
       frameRate: 10,
       repeat: -1
     });
-this.physics.add.overlap(this.player, this.monsters,chocMonster2, null, this);
+    this.physics.add.overlap(this.player, this.monsters, chocMonster2, null, this);
 
-this.portal_retour2= this.physics.add.sprite(2752,448,"img_portal");
-this.physics.add.collider(this.portal_retour2, calque_plateformes);
+
+
+    groupe_potions = this.physics.add.group();
+    groupe_potions.create(2080, 128, "potion");
+    groupe_potions.create(1312, 576, "potion");
+    this.physics.add.collider(groupe_potions, calque_plateformes);
+    this.physics.add.overlap(this.player, groupe_potions, ramasserPotion, null, this);
+
+    this.anims.create({
+      key: "Potion",
+      frames: [{ key: "potion", frame: 2 }],
+      frameRate: 4
+    });
+
+    groupe_potions.children.iterate(function iterateur(Potions) {
+      Potions.anims.play('Potion');
+    });
+
+
+
+    this.portal_retour2 = this.physics.add.sprite(2752, 448, "img_portal");
+    this.physics.add.collider(this.portal_retour2, calque_plateformes);
+
+
 
 
   }
 
-  
+
   update() {
 
-this.portal_retour2.anims.play("portal_tourne", true);
-if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-if (this.physics.overlap(this.player, this.portal_retour2)){
-      this.son_background.stop();
-      this.son_reussite.play(
-        {volume: 0.8}
-      );
-      this.time.delayedCall(3000, () => {
-        this.scene.start("accueil", { x: 1088, y: 256 });
-      });
-      
-    }
+    this.portal_retour2.anims.play("portal_tourne", true);
+    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+      if (this.physics.overlap(this.player, this.portal_retour2)) {
+        this.son_background.stop();
+        this.son_reussite.play(
+          { volume: 0.8 }
+        );
+        this.time.delayedCall(3000, () => {
+          this.scene.start("accueil", { x: 1088, y: 256 });
+        });
+
+      }
     }
 
 
@@ -202,7 +228,7 @@ if (this.physics.overlap(this.player, this.portal_retour2)){
 
     let vitesse = 0;
 
-    
+
 
     this.monsters.children.iterate((monster) => {
       if (!monster) return;
@@ -211,9 +237,9 @@ if (this.physics.overlap(this.player, this.portal_retour2)){
       this.physics.moveToObject(monster, this.player, vitesse);
 
 
-    
-    if (monster.body.velocity.x < 0) {
-      monster.anims.play("anim_tourne_gauche_m", true);
+
+      if (monster.body.velocity.x < 0) {
+        monster.anims.play("anim_tourne_gauche_m", true);
       } else if (monster.body.velocity.x > 0) {
         monster.anims.play("anim_tourne_droite_m", true);
       } else {
@@ -230,6 +256,8 @@ if (this.physics.overlap(this.player, this.portal_retour2)){
 
 }
 
+
+
 function chocMonster2(un_player, un_monster) {
 
   this.son_scream.play();
@@ -243,9 +271,17 @@ function chocMonster2(un_player, un_monster) {
     fill: "#ff0000"
   }).setOrigin(0.5);
 
-  
+
   this.time.delayedCall(1500, () => {
     this.son_background.stop();
     this.scene.start("accueil", { x: 896, y: 480 });
   });
 }
+
+
+
+function ramasserPotion(un_player, une_potion) {
+  une_potion.disableBody(true, true);
+}
+
+
