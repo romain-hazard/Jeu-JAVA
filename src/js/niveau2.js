@@ -53,7 +53,7 @@ export default class niveau2 extends Phaser.Scene {
 
     this.son_background.play({
       loop: true,
-      volume: 3
+      volume: 0.5
     });
 
 
@@ -174,9 +174,11 @@ this.portal_retour2.anims.play("portal_tourne", true);
 if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
 if (this.physics.overlap(this.player, this.portal_retour2)){
       this.son_background.stop();
-      this.son_reussite.play();
+      this.son_reussite.play(
+        {volume: 0.8}
+      );
       this.time.delayedCall(3000, () => {
-        this.scene.start("accueil", { x: 1056, y: 256 });
+        this.scene.start("accueil", { x: 1088, y: 256 });
       });
       
     }
