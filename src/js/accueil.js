@@ -25,7 +25,7 @@ export default class accueil extends Phaser.Scene {
       frameHeight: 68,
     });
     
-     
+     this.load.font
  
   }
 
