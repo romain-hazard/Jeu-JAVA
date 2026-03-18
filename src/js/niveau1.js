@@ -213,6 +213,7 @@ export default class niveau1 extends Phaser.Scene {
       frames: [{ key: "potion", frame: 0 }],
       frameRate: 4
     });
+<<<<<<< HEAD
     groupe_potions.children.iterate(function iterateur(Potions) {
       Potions.anims.play('Potion');
     });
@@ -220,6 +221,9 @@ export default class niveau1 extends Phaser.Scene {
 
 
 
+=======
+    groupe_potions.anims.play('Potion');
+>>>>>>> 4ff4c4679b236276225b7d36c6c7e1fa8700171d
 
 
     this.portal_retour1 = this.physics.add.sprite(3072, 576, "img_portal");
@@ -235,6 +239,48 @@ export default class niveau1 extends Phaser.Scene {
 
     this.portal_retour1.anims.play("portal_tourne", true);
 
+if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+if (this.physics.overlap(this.player, this.portal_retour1)){
+      this.son_reussite.play();
+      this.son_background.stop();
+      this.scene.start("accueil", { x: 588, y: 384 });}
+    }
+
+
+
+    if (this.clavier.left.isDown) {
+      this.player.setVelocityX(-160);
+      this.player.anims.play("anim_tourne_gauche", true);
+    } else if (this.clavier.right.isDown) {
+      this.player.setVelocityX(160);
+      this.player.anims.play("anim_tourne_droite", true);
+    } else {
+      this.player.setVelocityX(0);
+      this.player.anims.play("anim_face");
+    }
+    if (this.clavier.up.isDown && this.player.body.blocked.down) {
+      this.player.setVelocityY(-430);
+    }
+
+    let vitesse = 0;
+
+
+
+    this.monsters.children.iterate((monster) => {
+      if (!monster) return;
+
+      // mouvement vers le joueur
+      this.physics.moveToObject(monster, this.player, vitesse);
+
+      // animation
+      if (monster.body.velocity.x < 0) {
+        monster.anims.play("anim_tourne_gauche_m", true);
+      } else if (monster.body.velocity.x > 0) {
+        monster.anims.play("anim_tourne_droite_m", true);
+      } else {
+        monster.anims.play("anim_face_m");
+      }
+    });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.portal_retour1)) {
         this.son_reussite.play();
