@@ -190,10 +190,7 @@ export default class niveau3 extends Phaser.Scene {
 
     this.physics.add.overlap(this.groupeBullets, this.monsters, this.hitMonster, null, this);
     this.physics.add.collider(this.monsters, calque_s_3);
-    this.physics.add.collider(this.groupeBullets, calque_s_3, (bullet) => {
-      bullet.destroy();
-    });
-
+    
     this.physics.world.on("worldbounds", (body) => {
       let obj = body.gameObject;
       if (this.groupeBullets.contains(obj)) {
@@ -290,11 +287,7 @@ export default class niveau3 extends Phaser.Scene {
     }
 
     this.portal_retour3.anims.play("portal_tourne", true);
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.portal_retour3)) {
-        this.scene.start("accueil", { x: 588, y: 384 });
-      }
-    }
+    
 
     let vitesse = 80;
     this.player.setVelocity(0, 0);
@@ -337,22 +330,53 @@ export default class niveau3 extends Phaser.Scene {
     
     
     });
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.portal_retour3) &&
-        this.monster.countActive(true) === 0
-      ) {
-        this.son_win.play();
-        this.son_background.stop();
-        this.time.delayedCall(3000, () => {
-          this.scene.start("accueil", { x: 1088 ,y: 256 });
-        });
-      } else {
-        this.add.text(this.player.x, this.player.y - 20, "MONSTRE !!!", {
-          fontSize: "16px",
-          fill: "#ff0000"
-        });
-      }
-    }
+    
+
+    if (Phaser.Input.Keyboard.JustDown(this.clavier.space)) {
+
+  if (this.win) return;
+
+  let surPortail = this.physics.overlap(this.player, this.portal_retour3);
+  let plusDeMonstres = this.monsters.countActive(true) === 0;
+
+  if (surPortail && plusDeMonstres) {
+
+    this.win = true;
+
+    this.son_background.stop();
+    this.son_win.play();
+
+    this.player.setVelocity(0, 0);
+
+    let img = this.add.image(
+      this.cameras.main.centerX,
+      this.cameras.main.centerY,
+      "fond_final"
+    );
+
+    img.setScrollFactor(0);
+    img.setDepth(100);
+
+
+    let scaleX = this.cameras.main.width / img.width;
+    let scaleY = this.cameras.main.height / img.height;
+    let scale = Math.min(scaleX, scaleY);
+    img.setScale(scale);
+
+    this.time.delayedCall(3000, () => {
+      this.scene.start("menu", { x: 1088, y: 256 });
+    });
+
+  } 
+  else if (surPortail) {
+
+    this.add.text(this.player.x, this.player.y - 20, "MONSTRES RESTANTS", {
+      fontSize: "16px",
+      fill: "#ff0000"
+    }).setDepth(100);
+
+  }
+}
 
 
 
