@@ -37,6 +37,7 @@ export default class niveau1 extends Phaser.Scene {
     
     this.load.audio('scream', 'src/assets/sound_scream.mp3');
     this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
+    this.load.audio('reussite', 'src/assets/Mission_passed_sound.mp3');
 
 
 
@@ -49,9 +50,11 @@ export default class niveau1 extends Phaser.Scene {
 
     var son_scream;
     var son_background;
+    var son_reussite;
 
     this.son_scream = this.sound.add('scream');
     this.son_background = this.sound.add('background');
+    this.son_reussite = this.sound.add('reussite');
 
     this.anims.create({
       key: "portal_tourne", 
@@ -69,6 +72,7 @@ export default class niveau1 extends Phaser.Scene {
       loop: true,
       volume: 3,
     });
+    
 
     const carteDuNiveau1 = this.add.tilemap("carte1");
 
@@ -194,6 +198,8 @@ this.physics.add.collider(this.portal_retour1, calque_plateformes);
 
 if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
 if (this.physics.overlap(this.player, this.portal_retour1)){
+      this.son_reussite.play();
+      this.son_background.stop();
       this.scene.start("accueil", { x: 588, y: 384 });}
     }
 
