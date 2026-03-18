@@ -32,7 +32,7 @@ export default class niveau3 extends Phaser.Scene {
     );
     this.load.audio('scream', 'src/assets/sound_scream.mp3');
     this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
-    this.load.audio('win', 'src/assets/sound_win_fin.mp3');
+    this.load.audio('win', 'src/assets/son_win_fin.mp3');
 
 
     this.load.image("bullet", "src/assets/Slime.png")
