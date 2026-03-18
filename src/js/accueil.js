@@ -25,12 +25,8 @@ export default class accueil extends Phaser.Scene {
       frameHeight: 68,
     });
     
-<<<<<<< HEAD
-    
-=======
      this.load.font
      this.load.audio('labo', 'src/assets/acceuil_labo.mp3');
->>>>>>> 01d8632ac9ccd75738ff0253c312002cf4fddf4b
  
   }
 

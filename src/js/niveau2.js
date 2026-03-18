@@ -176,7 +176,7 @@ if (this.physics.overlap(this.player, this.portal_retour2)){
       this.son_background.stop();
       this.son_reussite.play();
       this.time.delayedCall(3000, () => {
-        this.scene.start("accueil", { x: 588, y: 384 });
+        this.scene.start("accueil", { x: 1056, y: 256 });
       });
       
     }
