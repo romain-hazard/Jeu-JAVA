@@ -1,6 +1,6 @@
 import * as fct from "/src/js/fonctions.js";
 
-
+var groupe_potions;
 
 
 export default class niveau1 extends Phaser.Scene {
@@ -11,13 +11,14 @@ export default class niveau1 extends Phaser.Scene {
     });
   }
 
-  
+
   preload() {
 
     this.load.image("Phaser_tuilesdejeu_1", "src/assets/laboratoire.png");
     this.load.image("Phaser_tuilesdejeu_2", "src/assets/Tiles_scientifique.png");
     this.load.image("Phaser_tuilesdejeu_3", "src/assets/Labo.png");
     this.load.tilemapTiledJSON("carte1", "src/assets/map_niveau_1.json");
+    this.load.image("potion", "src/assets/potion.png");
 
     this.load.spritesheet("Sprite_monster_1_", "src/assets/Sprite_monster.png", {
       frameWidth: 65,
@@ -30,11 +31,11 @@ export default class niveau1 extends Phaser.Scene {
       frameHeight: 77,
     }
     );
-    this.load.spritesheet("img_portal", "src/assets/portal.png",{
+    this.load.spritesheet("img_portal", "src/assets/portal.png", {
       frameWidth: 66,
       frameHeight: 68,
     });
-    
+
     this.load.audio('scream', 'src/assets/sound_scream.mp3');
     this.load.audio('background', 'src/assets/sound_oppressant_acceuile.mp3');
 
@@ -54,16 +55,16 @@ export default class niveau1 extends Phaser.Scene {
     this.son_background = this.sound.add('background');
 
     this.anims.create({
-      key: "portal_tourne", 
+      key: "portal_tourne",
       frames: this.anims.generateFrameNumbers("img_portal", {
         start: 0,
         end: 4,
-      }), 
-      frameRate: 10, 
-      repeat: -1  
+      }),
+      frameRate: 10,
+      repeat: -1
     });
 
-    
+
 
     this.son_background.play({
       loop: true,
@@ -135,23 +136,24 @@ export default class niveau1 extends Phaser.Scene {
 
     this.monsters = this.physics.add.group();
 
-for (let i = 0; i < 5; i++) {
+    for (let i = 0; i < 5; i++) {
 
-  let monster = this.monsters.create(
-    Phaser.Math.Between(800, 3000),
-    Phaser.Math.Between(100, 500),
-    "Sprite_monster_1_"
-  );
+      let monster = this.monsters.create(
+        Phaser.Math.Between(800, 3000),
+        Phaser.Math.Between(100, 500),
+        "Sprite_monster_1_"
+      );
 
-  monster.setBounce(1);
-  monster.setCollideWorldBounds(true);
-  monster.body.allowGravity = false;
-  monster.setMaxVelocity(150, 150);
-  monster.setDrag(50, 50);
-}
+      monster.setBounce(1);
+      monster.setCollideWorldBounds(true);
+      monster.body.allowGravity = false;
+      monster.setMaxVelocity(150, 150);
+      monster.setDrag(50, 50);
+    }
 
-this.physics.add.overlap(this.player, this.monsters,chocMonster, null, this);
-this.physics.add.collider(this.monsters, calque_plateformes);
+
+    this.physics.add.overlap(this.player, this.monsters, chocMonster, null, this);
+    this.physics.add.collider(this.monsters, calque_plateformes);
 
     this.anims.create({
       key: "anim_tourne_gauche_m",
@@ -180,9 +182,18 @@ this.physics.add.collider(this.monsters, calque_plateformes);
       repeat: -1
     });
 
-this.portal_retour1= this.physics.add.sprite(3072,576,"img_portal");
-this.physics.add.collider(this.portal_retour1, calque_plateformes);
-  
+
+    groupe_potions = this.physics.add.group();
+    groupe_potions.create(1024, 96, "potion");
+    groupe_potions.create(768, 480, "potion");
+    this.physics.add.collider(groupe_potions, calque_plateformes);
+
+
+
+    this.portal_retour1 = this.physics.add.sprite(3072, 576, "img_portal");
+    this.physics.add.collider(this.portal_retour1, calque_plateformes);
+
+
 
 
 
@@ -192,12 +203,13 @@ this.physics.add.collider(this.portal_retour1, calque_plateformes);
 
     this.portal_retour1.anims.play("portal_tourne", true);
 
-if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-if (this.physics.overlap(this.player, this.portal_retour1)){
-      this.scene.start("accueil", { x: 588, y: 384 });}
+    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+      if (this.physics.overlap(this.player, this.portal_retour1)) {
+        this.scene.start("accueil", { x: 588, y: 384 });
+      }
     }
 
-    
+
 
     if (this.clavier.left.isDown) {
       this.player.setVelocityX(-160);
@@ -215,23 +227,23 @@ if (this.physics.overlap(this.player, this.portal_retour1)){
 
     let vitesse = 60;
 
-    
 
-this.monsters.children.iterate((monster) => {
-  if (!monster) return;
 
-  // mouvement vers le joueur
-  this.physics.moveToObject(monster, this.player, vitesse);
+    this.monsters.children.iterate((monster) => {
+      if (!monster) return;
 
-  // animation
-  if (monster.body.velocity.x < 0) {
-    monster.anims.play("anim_tourne_gauche_m", true);
-  } else if (monster.body.velocity.x > 0) {
-    monster.anims.play("anim_tourne_droite_m", true);
-  } else {
-    monster.anims.play("anim_face_m");
-  }
-});
+      // mouvement vers le joueur
+      this.physics.moveToObject(monster, this.player, vitesse);
+
+      // animation
+      if (monster.body.velocity.x < 0) {
+        monster.anims.play("anim_tourne_gauche_m", true);
+      } else if (monster.body.velocity.x > 0) {
+        monster.anims.play("anim_tourne_droite_m", true);
+      } else {
+        monster.anims.play("anim_face_m");
+      }
+    });
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.porte_retour)) {
         console.log("niveau 1 : retour vers selection");
@@ -254,7 +266,7 @@ function chocMonster(un_player, un_monster) {
     fill: "#ff0000"
   }).setOrigin(0.5);
 
-  
+
   this.time.delayedCall(1500, () => {
     this.son_background.stop();
     this.scene.start("accueil", { x: 288, y: 384 });
