@@ -213,7 +213,7 @@ export default class niveau2 extends Phaser.Scene {
           fontSize: "40pt",
           color: '#37d83c'
         }).setDepth(100).setScrollFactor(0);
-        this.time.delayedCall(3000, () => {
+        this.time.delayedCall(1000, () => {
           this.scene.start("accueil", { x: 1100, y: 200 });
         });
       } else {
