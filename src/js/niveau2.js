@@ -183,7 +183,7 @@ export default class niveau2 extends Phaser.Scene {
 
     this.anims.create({
       key: "anim_face_m",
-      frames: [{ key: "Sprite_monster_1_", frame: 7 }],
+      frames: [{ key: "Sprite_monster_1_", frame: 20 }],
       frameRate: 20
     });
  
@@ -208,7 +208,7 @@ export default class niveau2 extends Phaser.Scene {
         this.son_reussite.play();
         this.son_background.stop();
         this.time.delayedCall(3000, () => {
-          this.scene.start("accueil", { x: 1088 ,y: 256 });
+          this.scene.switch("accueil", { x: 1088 ,y: 256 });
         });
       } else {
         this.add.text(this.player.x, this.player.y - 20, "Ramasse toutes les potions !", {
@@ -231,13 +231,17 @@ export default class niveau2 extends Phaser.Scene {
       this.player.anims.play("anim_face");
     }
     if (this.clavier.up.isDown && this.player.body.blocked.down) {
-      this.player.setVelocityY(-330);
+      this.player.setVelocityY(-430);
     }
     if (this.clavier.down.isDown) {
       this.player.setVelocityY(300);
     }
 
-    let vitesse = 0;
+
+
+
+
+    let vitesse = 50;
 
 
 
@@ -276,7 +280,7 @@ function chocMonster2(un_player, un_monster) {
 
   this.time.delayedCall(1500, () => {
     this.son_background.stop();
-    this.scene.start("accueil", { x: 896, y: 480 });
+    this.scene.start("accueil", { x: 950, y: 250 });
   });
 }
 

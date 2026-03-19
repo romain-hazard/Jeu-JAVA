@@ -173,21 +173,31 @@ export default class niveau3 extends Phaser.Scene {
 
     this.monsters = this.physics.add.group();
 
-    for (let i = 0; i < 8; i++) {
-      let monster = this.monsters.create(
-        Phaser.Math.Between(100, 3000),
-        Phaser.Math.Between(100, 500),
-        "Sprite_monster_1_"
-      );
+    const positions = [
+  { x: 352, y: 480 },
+  { x: 640, y: 320 },
+  { x: 928, y: 288 },
+  { x: 1184, y: 224 },
+  { x: 1376, y: 256 },
+  { x: 1728, y: 480 },
+  { x: 2368, y: 192 },
+  { x: 2720, y: 480 }
+];
 
-      monster.setBounce(1);
-      monster.setCollideWorldBounds(true);
-      monster.body.allowGravity = false;
-      monster.setMaxVelocity(150, 150);
-      monster.setDrag(50, 50);
-      monster.pointsVie = 3;
-    }
+positions.forEach(pos => {
+  let monster = this.monsters.create(
+    pos.x,
+    pos.y,
+    "Sprite_monster_1_"
+  );
 
+  monster.setBounce(1);
+  monster.setCollideWorldBounds(true);
+  monster.body.allowGravity = false;
+  monster.setMaxVelocity(150, 150);
+  monster.setDrag(50, 50);
+  monster.pointsVie = 3;
+});
     this.physics.add.overlap(this.groupeBullets, this.monsters, this.hitMonster, null, this);
     this.physics.add.collider(this.monsters, calque_s_3);
     
@@ -203,8 +213,8 @@ export default class niveau3 extends Phaser.Scene {
     this.anims.create({
       key: "anim_tourne_gauche_m",
       frames: this.anims.generateFrameNumbers("Sprite_monster_2_", {
-        start: 23,
-        end: 26,
+        start: 25,
+        end: 27,
       }),
       frameRate: 10,
       repeat: -1
@@ -212,7 +222,7 @@ export default class niveau3 extends Phaser.Scene {
 
     this.anims.create({
       key: "anim_face_m",
-      frames: [{ key: "Sprite_monster", frame: 7 }],
+      frames: [{ key: "Sprite_monster", frame: 20 }],
       frameRate: 20
     });
 
@@ -268,6 +278,17 @@ export default class niveau3 extends Phaser.Scene {
       bullet.destroy();
     });
 
+
+    this.physics.add.collider(this.groupeBullets, calque_s_3, (bullet) => {
+  bullet.destroy();
+});
+
+this.physics.add.collider(this.groupeBullets, calque_o_3, (bullet) => {
+  bullet.destroy();
+});
+
+
+this.physics.add.collider(this.monsters, this.monsters);
   }
 
 

@@ -182,7 +182,7 @@ export default class niveau1 extends Phaser.Scene {
 
     this.anims.create({
       key: "anim_face_m",
-      frames: [{ key: "Sprite_monster_1_", frame: 7 }],
+      frames: [{ key: "Sprite_monster_1_", frame: 20 }],
       frameRate: 20
     });
 
@@ -198,7 +198,7 @@ export default class niveau1 extends Phaser.Scene {
 
 
     this.groupe_potions = this.physics.add.group();
-    this.groupe_potions.create(1024, 96, "potion");
+    this.groupe_potions.create(1724, 96, "potion");
     this.groupe_potions.create(768, 480, "potion");
     this.physics.add.collider(this.groupe_potions, calque_plateformes);
     this.physics.add.overlap(this.player, this.groupe_potions, ramasserPotion, null, this);
@@ -231,7 +231,7 @@ export default class niveau1 extends Phaser.Scene {
         this.son_reussite.play();
         this.son_background.stop();
         this.time.delayedCall(3000, () => {
-          this.scene.start("accueil", { x: 896 ,y: 480 });
+          this.scene.start("accueil", { x: 696 ,y: 480 });
         });
       } else {
         this.add.text(this.player.x, this.player.y - 20, "Ramasse toutes les potions !", {
@@ -281,48 +281,6 @@ export default class niveau1 extends Phaser.Scene {
     });
    
 
-
-    if (this.clavier.left.isDown) {
-      this.player.setVelocityX(-160);
-      this.player.anims.play("anim_tourne_gauche", true);
-    } else if (this.clavier.right.isDown) {
-      this.player.setVelocityX(160);
-      this.player.anims.play("anim_tourne_droite", true);
-    } else {
-      this.player.setVelocityX(0);
-      this.player.anims.play("anim_face");
-    }
-    if (this.clavier.up.isDown && this.player.body.blocked.down) {
-      this.player.setVelocityY(-430);
-    }
-
-
-
-
-
-    monsters.children.iterate((monster) => {
-      if (!monster) return;
-
-      // mouvement vers le joueur
-      this.physics.moveToObject(monster, this.player, vitesse);
-
-      // animation
-      if (monster.body.velocity.x < 0) {
-        monster.anims.play("anim_tourne_gauche_m", true);
-      } else if (monster.body.velocity.x > 0) {
-        monster.anims.play("anim_tourne_droite_m", true);
-      } else {
-        monster.anims.play("anim_face_m");
-      }
-    });
-
-
-
-
-
-
-
-
   }
 }
 
@@ -344,7 +302,7 @@ function chocMonster(un_player, un_monster) {
 
   this.time.delayedCall(1500, () => {
     this.son_background.stop();
-    this.scene.start("accueil", { x: 288, y: 384 });
+    this.scene.start("accueil", { x: 420, y: 384 });
   });
 }
 
