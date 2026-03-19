@@ -3,10 +3,10 @@ var portal;
 var player;
 
 export default class accueil extends Phaser.Scene {
-  // constructeur de la classe
+  
   constructor() {
     super({
-      key: "accueil" //  ici on précise le nom de la classe en tant qu'identifiant
+      key: "accueil" 
     });
   }
 
