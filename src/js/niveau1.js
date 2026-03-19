@@ -126,7 +126,7 @@ export default class niveau1 extends Phaser.Scene {
         families: ['plasdrip']
       },
       active: () => {
-        this.add.text(400, 100, "Vous êtes dans le niveau 1", {
+        this.add.text(400, 100, "Vous etes dans le niveau 1", {
           fontFamily: 'plasdrip',
           fontSize: "22pt",
           color: '#37d83c'
@@ -134,7 +134,6 @@ export default class niveau1 extends Phaser.Scene {
       }
     });
 
-    //this.porte_retour = this.physics.add.staticSprite(100, 550, "img_porte1");
 
     this.player = this.physics.add.sprite(128, 550, "img_perso");
     this.player.refreshBody();
@@ -230,8 +229,13 @@ export default class niveau1 extends Phaser.Scene {
       ) {
         this.son_reussite.play();
         this.son_background.stop();
+        this.add.text(400, 100, "Mission Passed ! Respect +", {
+          fontFamily: 'plasdrip',
+          fontSize: "40pt",
+          color: '#37d83c'
+        }).setDepth(100).setScrollFactor(0);
         this.time.delayedCall(3000, () => {
-          this.scene.start("accueil", { x: 696 ,y: 480 });
+          this.scene.start("accueil", { x: 696, y: 480 });
         });
       } else {
         this.add.text(this.player.x, this.player.y - 20, "Ramasse toutes les potions !", {
@@ -267,10 +271,9 @@ export default class niveau1 extends Phaser.Scene {
     monsters.children.iterate((monster) => {
       if (!monster) return;
 
-      // mouvement vers le joueur
       this.physics.moveToObject(monster, this.player, vitesse);
 
-      // animation
+
       if (monster.body.velocity.x < 0) {
         monster.anims.play("anim_tourne_gauche_m", true);
       } else if (monster.body.velocity.x > 0) {
@@ -279,7 +282,7 @@ export default class niveau1 extends Phaser.Scene {
         monster.anims.play("anim_face_m");
       }
     });
-   
+
 
   }
 }

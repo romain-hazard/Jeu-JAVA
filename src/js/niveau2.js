@@ -107,7 +107,7 @@ export default class niveau2 extends Phaser.Scene {
       monsters.body.allowGravity = false;
       monsters.setMaxVelocity(150, 150);
       monsters.setDrag(50, 50);
-      
+
     }
 
     WebFont.load({
@@ -115,7 +115,7 @@ export default class niveau2 extends Phaser.Scene {
         families: ['plasdrip']
       },
       active: () => {
-        this.add.text(400, 100, "Vous êtes dans le niveau 2", {
+        this.add.text(400, 100, "Vous etes dans le niveau 2", {
           fontFamily: 'plasdrip',
           fontSize: "22pt",
           color: '#37d83c'
@@ -123,7 +123,7 @@ export default class niveau2 extends Phaser.Scene {
       }
     });
 
-    
+
 
     this.player = this.physics.add.sprite(100, 300, "img_perso");
     this.player.refreshBody();
@@ -187,7 +187,7 @@ export default class niveau2 extends Phaser.Scene {
       frames: [{ key: "Sprite_monster_1_", frame: 20 }],
       frameRate: 20
     });
- 
+
     this.anims.create({
       key: "anim_tourne_droite_m",
       frames: this.anims.generateFrameNumbers("Sprite_monster_1_", {
@@ -201,19 +201,24 @@ export default class niveau2 extends Phaser.Scene {
 
 
     this.portal_retour2.anims.play("portal_tourne", true);
-    
+
     if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
       if (this.physics.overlap(this.player, this.portal_retour2) &&
         this.groupe_potions.countActive(true) === 0
       ) {
         this.son_reussite.play();
         this.son_background.stop();
+        this.add.text(400, 100, "Mission Passed ! Respect +", {
+          fontFamily: 'plasdrip',
+          fontSize: "40pt",
+          color: '#37d83c'
+        }).setDepth(100).setScrollFactor(0);
         this.time.delayedCall(3000, () => {
-          this.scene.switch("accueil", { x: 1088 ,y: 256 });
+          this.scene.start("accueil", { x: 1100, y: 200 });
         });
       } else {
         this.add.text(this.player.x, this.player.y - 20, "Ramasse toutes les potions !", {
-          fontSize: "16px",
+          fontSize: "24px",
           fill: "#ff0000"
         });
       }
@@ -251,14 +256,15 @@ export default class niveau2 extends Phaser.Scene {
 
       this.physics.moveToObject(monsters, this.player, vitesse);
 
-  if (monsters.body.velocity.x < 0) {
-    monsters.anims.play("anim_tourne_gauche_m", true);
-  } else if (monsters.body.velocity.x > 0) {
-    monsters.anims.play("anim_tourne_droite_m", true);
-  } else {
-    monsters.anims.play("anim_face_m");
-  }});
-    
+      if (monsters.body.velocity.x < 0) {
+        monsters.anims.play("anim_tourne_gauche_m", true);
+      } else if (monsters.body.velocity.x > 0) {
+        monsters.anims.play("anim_tourne_droite_m", true);
+      } else {
+        monsters.anims.play("anim_face_m");
+      }
+    });
+
   }
 
 }

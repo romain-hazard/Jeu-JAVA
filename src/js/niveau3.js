@@ -127,7 +127,7 @@ export default class niveau3 extends Phaser.Scene {
         families: ['plasdrip']
       },
       active: () => {
-        this.add.text(400, 100, "Vous êtes dans le niveau 3", {
+        this.add.text(400, 100, "Vous etes dans le niveau 3", {
           fontFamily: 'plasdrip',
           fontSize: "22pt",
           color: '#37d83c'
@@ -271,9 +271,9 @@ positions.forEach(pos => {
 
     calque_3.setCollisionByProperty({ estSolide: true });
 
-    // Collisions avec joueur et monstres
+   
     this.physics.add.collider(this.player, calque_3);
-   // this.physics.add.collider(this.monsters, calque_3);
+  
     this.physics.add.collider(this.groupeBullets, calque_3, (bullet) => {
       bullet.destroy();
     });
@@ -384,15 +384,15 @@ this.physics.add.collider(this.monsters, this.monsters);
     let scale = Math.min(scaleX, scaleY);
     img.setScale(scale);
 
-    this.time.delayedCall(3000, () => {
-      this.scene.start("menu", { x: 1088, y: 256 });
+    this.time.delayedCall(6000, () => {
+      this.scene.start("menu");
     });
 
   } 
   else if (surPortail) {
 
     this.add.text(this.player.x, this.player.y - 20, "MONSTRES RESTANTS", {
-      fontSize: "16px",
+      fontSize: "24px",
       fill: "#ff0000"
     }).setDepth(100);
 
