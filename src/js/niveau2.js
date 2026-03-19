@@ -107,6 +107,7 @@ export default class niveau2 extends Phaser.Scene {
       monsters.body.allowGravity = false;
       monsters.setMaxVelocity(150, 150);
       monsters.setDrag(50, 50);
+      
     }
 
     WebFont.load({
@@ -130,7 +131,7 @@ export default class niveau2 extends Phaser.Scene {
     this.player.setCollideWorldBounds(true);
     this.clavier = this.input.keyboard.createCursorKeys();
     this.physics.add.collider(this.player, calque_plateformes);
-
+    this.physics.add.collider(this.monsters, calque_plateformes);
 
 
     this.physics.world.setBounds(0, 0, 3200, 640);
@@ -280,7 +281,7 @@ function chocMonster2(un_player, un_monster) {
 
   this.time.delayedCall(1500, () => {
     this.son_background.stop();
-    this.scene.start("accueil", { x: 950, y: 250 });
+    this.scene.start("accueil", { x: 920, y: 200 });
   });
 }
 
