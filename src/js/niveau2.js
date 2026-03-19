@@ -202,10 +202,10 @@ export default class niveau2 extends Phaser.Scene {
 
     this.portal_retour2.anims.play("portal_tourne", true);
 
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
-      if (this.physics.overlap(this.player, this.portal_retour2) &&
-        this.groupe_potions.countActive(true) === 0
-      ) {
+   
+      if (this.physics.overlap(this.player, this.portal_retour2)) {
+      if (this.groupe_potions.countActive(true) === 0) {
+
         this.son_reussite.play();
         this.son_background.stop();
         this.add.text(400, 100, "Mission Passed ! Respect +", {
@@ -217,12 +217,14 @@ export default class niveau2 extends Phaser.Scene {
           this.scene.start("accueil", { x: 1100, y: 200 });
         });
       } else {
+
         this.add.text(this.player.x, this.player.y - 20, "Ramasse toutes les potions !", {
           fontSize: "24px",
           fill: "#ff0000"
-        });
+        }).setDepth(100).setScrollFactor(0);
       }
     }
+    
 
 
 

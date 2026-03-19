@@ -19,7 +19,7 @@ var config = {
       gravity: {
         y: 300 
       },
-      debug: true 
+      debug: false 
     }
   },
   scene: [menu,accueil, niveau1, niveau2, niveau3 ]

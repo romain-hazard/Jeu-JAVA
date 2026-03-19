@@ -353,7 +353,7 @@ this.physics.add.collider(this.monsters, this.monsters);
     });
     
 
-    if (Phaser.Input.Keyboard.JustDown(this.clavier.space)) {
+    
 
   if (this.win) return;
 
@@ -397,7 +397,7 @@ this.physics.add.collider(this.monsters, this.monsters);
     }).setDepth(100);
 
   }
-}
+
 
 
 

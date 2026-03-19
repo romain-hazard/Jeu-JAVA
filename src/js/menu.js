@@ -40,7 +40,6 @@ showConsignes() {
   const height = this.sys.game.config.height;
 
   this.children.removeAll();
-
   let bg = this.add.image(0, 0, "consigne_fond").setOrigin(0);
   bg.displayWidth = width;
   bg.displayHeight = height;
@@ -51,7 +50,7 @@ showConsignes() {
     .setInteractive({ useHandCursor: true });
 
   bouton_start.on("pointerup", () => {
-    this.scene.start("accueil");
+    this.scene.start("accueil",{ x: 32, y: 200 });
   });
 }
 }

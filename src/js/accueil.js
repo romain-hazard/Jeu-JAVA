@@ -49,10 +49,6 @@ export default class accueil extends Phaser.Scene {
     // ajout d'un texte distintcif  du niveau
     */
 
-
- 
-
-
     var son_labo;
     this.son_labo = this.sound.add('labo');
     this.son_labo.play({
@@ -144,6 +140,10 @@ if (this.spawnX !== undefined && this.spawnY !== undefined) {
     this.portal2 = this.physics.add.sprite(992,192,"img_portal");
     this.portal3 = this.physics.add.sprite(1376,320,"img_portal");
 
+
+
+    
+
     calque_mur.setCollisionByExclusion([-1]);
     calque_perimetre.setCollisionByExclusion([-1]);
     calque_deco.setCollisionByExclusion([-1]);
@@ -206,7 +206,7 @@ this.portal2.anims.play("portal_tourne", true);
 this.portal3.anims.play("portal_tourne", true);
 
 
-if (Phaser.Input.Keyboard.JustDown(this.clavier.space) == true) {
+
 if (this.physics.overlap(player, this.portal1)){
       this.son_labo.stop();
       this.scene.start("niveau1");}
@@ -218,7 +218,7 @@ if (this.physics.overlap(player, this.portal2)){
 if (this.physics.overlap(player, this.portal3)){
       this.son_labo.stop();
       this.scene.switch("niveau3");}
-}
+
 
 
 
